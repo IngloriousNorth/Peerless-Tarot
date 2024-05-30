@@ -265,6 +265,10 @@ h3{
 	padding: 7px;
 }
 
+.finished{
+	color:deepskyblue;
+}
+
 label {
   padding:12px 0px 7px 0px;
   

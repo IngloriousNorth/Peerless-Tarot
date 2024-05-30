@@ -27,6 +27,23 @@ $(document).ready(function(){
     }
     count = 0;
     peerCount = 0;
+    $("#finalTradingSpan").text("");
+    $("#interpretationHeader").hide();
+    $("#querent_textarea_trading").show();
+    $("#query_submitted_trading").text("");
+    $("#oracle_interpretation").text("")
+    $("#interpretationTradingSpan").text("");
+    $(".tradingOracle").hide();
+    $("#awaiting_oracle").show();
+    $("#awaiting_oracle_trading").show();
+    $(".interpretation").show();
+    $(".interpretation_button").show();
+    $("#tripcode").show();
+    $("#query_textarea_trading").fadeOut();
+    $(".interpretationTrading").show();
+    $(".interpretation_trading_button").show();
+    $("#wallet_address").show();
+    $(".trading").show();
     $(".finished").hide();
     $(".reading_h3").hide();
     $("#trading").prop("disabled", false)
@@ -180,6 +197,10 @@ $("#initiate_button").click(function(e){
   $("#initiate_button").prop("disabled", true);
   $("#trading").prop("disabled", true);
 
+  $("#tripcode").hide();
+  $("#wallet_address").hide();
+  $(".trading").hide();
+
   p = new SimplePeer({ 
     initiator: true,
    // config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:global.stun.twilio.com:3478?transport=udp' }] },
@@ -220,7 +241,9 @@ $("#initiate_button").click(function(e){
       e.preventDefault();
       console.log("DRAW");
       $(".draw").prop("disabled",true)
-      $(".interpretation").val("");    
+      $(".draw").fadeOut(5555);
+      $(".interpretation").val("");  
+      $("#interpretationHeader").fadeIn()  
       //for some reason this gets called twice?
       threeThreeThreeSpread(function(err, result){
         console.log("1TIMER");
@@ -238,11 +261,18 @@ $("#initiate_button").click(function(e){
   $(".interpretation_button").click(function(){
     p.send($(".interpretation").val());
     $(".interpretation_button").prop("disabled", true)
+    $(".interpretation").fadeOut();
+    $(".interpretation_button").fadeOut();
+    $("#oracle_interpretation").text($(".interpretation").val())
     if($("#trading").is(":checked")){
       $(".queryTrading").fadeIn(1337)
       $("#queryTrading").click(function(){
         //oracles sends the query
         $(".key").empty();
+        $("#query_textarea_trading").fadeOut();
+        $("#query_submitted_trading").text($("#querent_textarea_trading").val())
+        $("#querent_textarea_trading").fadeOut(777);
+        $("#queryTrading").fadeOut();
         $("#queryTrading").prop("disabled", true)
         p.send($("#querent_textarea_trading").val());
       })
@@ -260,7 +290,8 @@ $("#initiate_button").click(function(e){
         $(".query_submission").fadeIn(1337);
         $("#awaiting_query").fadeOut(777);
         $("#discovered_query").fadeIn();
-        $("#query_submission").text(data);  
+        $("#query_submission").text(data);
+
       }
       else if(count === 2){
         //this is the oracle's draw he receives thru the peer AS new oracle
@@ -270,7 +301,8 @@ $("#initiate_button").click(function(e){
       }
       else if(count === 3){
         //this is the oracle's reception of peer's (new oracle) interpretation 
-        $(".finalTrading span").text(data);
+        $("#finalTradingSpan").text(data);
+        $("#awaiting_oracle_trading").hide();
         $(".finalTrading").fadeIn(1337);
         $(".finished").fadeIn(3333)
 
@@ -333,7 +365,7 @@ $("#initiate_button").click(function(e){
   })
 
   p.on('close', () => {
-    reset();           
+    //reset();           
   })
 
   p.on('error', err => console.log('error', err))
@@ -595,15 +627,14 @@ function getReaders(cb){
                 //data is an oracle
                 if(peerCount === 1){
                   $(".final span").text(data);
-                  if(!$("h2:contains('TRADING')")){
+                  $("#awaiting_oracle").hide();
+                  if($('#magick_header').text().indexOf('TRADING') === -1){
                     $(".finished").fadeIn();
                   }
                   else{
                     $(".query_submission_trading").fadeIn();
                   }
-                }
-                //dummy data showing there's a trade so peer is new oracle waiting for querent
-              
+                }              
                 //this is the peer who has already received his interpretation, so 0 (connect), 1 (draw) then 2. dummy and 3. querent and
                 //show draw button and functionize
                 else if(peerCount === 2){
@@ -623,9 +654,13 @@ function getReaders(cb){
                       assembleSpread(threeThreeThree);
                       arrDigits = []
                       p.send(JSON.stringify(threeThreeThree));
+                      $(".tradingOracle").fadeIn(2999);
                       $(".interpretationTrading").fadeIn(777);
                       $(".interpretation_button_trading").fadeIn(1337);//4
                       $(".interpretation_button_trading").click(function(){
+                        $(".interpretationTrading").fadeOut();
+                        $(".interpretation_button_trading").fadeOut();
+                        $("#interpretationTradingSpan").text($(".interpretationTrading").val())
                         p.send($(".interpretationTrading").val());
                         $(".interpretation_button_trading").prop("disabled", true)
                         $(".finished").fadeIn(3333);
