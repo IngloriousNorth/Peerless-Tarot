@@ -3,8 +3,7 @@
   <head>
     <script>if (location.protocol === "http:") {
           location.replace(window.location.href.replace("http:", "https:"));
-      }
-    </script>
+      }</script>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
     <script src="lib/simplepeer.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -24,6 +23,7 @@
       <ul class="menu">
         <li><a class="ANCHOR oracle" href="#oracle">Oracle</a></li>
         <li><a class="ANCHOR peer" href="#peer">Peer</a></li>
+        <li><a class="ANCHOR solo" href="#solo">Solo</a></li>
       </ul>
     </header>
     <div class="main">
@@ -33,6 +33,25 @@
         <span>Click Peer to connect to an Oracle; submit a Query (optional); and wait for your Oracle to Draw.</span><br><br><br>
         <span>Connect a metamask wallet to pay oracles thru ETH using the dapp features!!!</span><br>
 
+      </div>
+      <div class="solo ANCHOR_partial">
+        <h2>Solo Reading</h2>
+        <button id="soloReading">DRAW!!!</button><br><br>
+        <div class="reading">
+          <h3 class="reading_h3 hidden">READING</h3>
+          <div class="data" id="data_1">
+          
+            <div class="key_holder">
+              <div id="key_2" class="key"></div>
+            </div>
+            <div class="key_holder">  
+              <div id="key_1" class="key"></div>
+            </div>
+            <div class="key_holder">
+              <div id="key_3" class="key"></div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="peer ANCHOR_partial">
         <div id="oracles">

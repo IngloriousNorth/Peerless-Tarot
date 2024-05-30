@@ -149,9 +149,7 @@ function assembleSpread(threeThreeThree){
   $("#data_1 #key_2").css({'transform' : 'rotate('+ (Math.floor(Math.random() * 8) - 8) +'deg)'})
   $("#data_1 #key_3").css({'transform' : 'rotate('+ (Math.floor(Math.random() * 8) - 8) +'deg)'})
   $(".reading_h3").fadeIn();
-  if(ANCHOR.page() === "oracle")
-    $(".interpretation").fadeIn(777);
-    $(".interpretation_button").fadeIn(777)
+  
   
 
   $(".final").show();
@@ -242,7 +240,10 @@ $("#initiate_button").click(function(e){
       $(".draw").prop("disabled",true)
       $(".draw").fadeOut(5555);
       $(".interpretation").val("");  
-      $("#interpretationHeader").fadeIn()  
+      $("#interpretationHeader").fadeIn() 
+      $(".interpretation").fadeIn(777);
+      $(".interpretation_button").fadeIn(777) 
+
       //for some reason this gets called twice?
       threeThreeThreeSpread(function(err, result){
         console.log("1TIMER");
@@ -251,6 +252,9 @@ $("#initiate_button").click(function(e){
         assembleSpread(threeThreeThree);
         arrDigits = []
         p.send(JSON.stringify(threeThreeThree));
+        $([document.documentElement, document.body]).animate({
+          scrollTop: $(".reading").offset().top
+        }, 2000);
       });
       //and then 
       //TRADE
@@ -368,7 +372,6 @@ $("#initiate_button").click(function(e){
 
   p.on('close', () => {
     //reset();
-    window.alert("Disconnected.")           
   })
 
   p.on('error', err => console.log('error', err))
@@ -623,11 +626,12 @@ function getReaders(cb){
                 console.log("CALLED ASSEMBLE SPREAD");
                 //data is an array
                 arr = JSON.parse(data);
-                if(ANCHOR.page() === "magick")
+                if(ANCHOR.page() === "magick"){
                   assembleSpread(arr);
-                $([document.documentElement, document.body]).animate({
-                  scrollTop: $(".reading").offset().top
-                }, 2000);
+                  $([document.documentElement, document.body]).animate({
+                    scrollTop: $(".reading").offset().top
+                  }, 2000);
+                }
               }
               catch(e){
                 //data is an oracle
@@ -660,6 +664,9 @@ function getReaders(cb){
                       assembleSpread(threeThreeThree);
                       arrDigits = []
                       p.send(JSON.stringify(threeThreeThree));
+                      $([document.documentElement, document.body]).animate({
+                        scrollTop: $(".reading").offset().top
+                      }, 2000);
                       $(".tradingOracle").fadeIn(2999);
                       $(".interpretationTrading").fadeIn(777);
                       $(".interpretation_button_trading").fadeIn(1337);//4
@@ -768,7 +775,6 @@ function getReaders(cb){
 
           p.on('close', () => {
             //reset(true);  
-            window.alert("Disconnected.")       
             $("#magick_header").text($(".magick h2").text()); 
           })
 
@@ -781,6 +787,13 @@ function getReaders(cb){
     })
   })
 }
+
+$("#soloReading").click(function(){
+  threeThreeThreeSpread(function(err, result){
+    $(".key").empty();
+    assembleSpread(result);
+  })
+})
 
 
 function encodeStr(rawStr){
