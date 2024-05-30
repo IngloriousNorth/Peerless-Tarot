@@ -36,8 +36,7 @@ $(document).ready(function(){
     $(".tradingOracle").hide();
     $("#awaiting_oracle").show();
     $("#awaiting_oracle_trading").show();
-    $(".interpretation").show();
-    $(".interpretation_button").show();
+   
     $("#tripcode").show();
     $("#query_textarea_trading").fadeOut();
     $(".interpretationTrading").show();
@@ -638,7 +637,7 @@ function getReaders(cb){
                 //this is the peer who has already received his interpretation, so 0 (connect), 1 (draw) then 2. dummy and 3. querent and
                 //show draw button and functionize
                 else if(peerCount === 2){
-
+                  console.log("HERE!");
                   $("#awaiting_query_trading").fadeOut(1337)
                   $("#discovered_query_trading").fadeIn(777)
                   $("#query_submission_trading").text(data);
@@ -761,7 +760,7 @@ function getReaders(cb){
 
 
           p.on('close', () => {
-            reset(true);         
+            //reset(true);         
             $("#magick_header").text($(".magick h2").text() + " (Disconnected.)"); 
           })
 
