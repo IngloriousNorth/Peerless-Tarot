@@ -109,7 +109,7 @@ img{
 }
 
 h2{
-	font-size:37px;
+	font-size:26px;
 	text-align:left;
 	color:mediumvioletred;
 	font-family:"Roboto", "Times New Roman", sans-serif;
@@ -222,7 +222,7 @@ button{
 h3{
 	padding:16px;
 	padding-left:0px;
-	font-size:26px;
+	font-size:18px;
 	font-family:"Open Sans", sans-serif;
 	color: mediumvioletred;
 }

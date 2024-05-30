@@ -296,6 +296,9 @@ $("#initiate_button").click(function(e){
         //this is the oracle's draw he receives thru the peer AS new oracle
         var arr = JSON.parse(data);
         assembleSpread(arr);
+        $([document.documentElement, document.body]).animate({
+          scrollTop: $(".reading").offset().top
+        }, 2000);
 
       }
       else if(count === 3){
@@ -364,7 +367,8 @@ $("#initiate_button").click(function(e){
   })
 
   p.on('close', () => {
-    //reset();           
+    //reset();
+    window.alert("Disconnected.")           
   })
 
   p.on('error', err => console.log('error', err))
@@ -621,6 +625,9 @@ function getReaders(cb){
                 arr = JSON.parse(data);
                 if(ANCHOR.page() === "magick")
                   assembleSpread(arr);
+                $([document.documentElement, document.body]).animate({
+                  scrollTop: $(".reading").offset().top
+                }, 2000);
               }
               catch(e){
                 //data is an oracle
@@ -760,8 +767,9 @@ function getReaders(cb){
 
 
           p.on('close', () => {
-            //reset(true);         
-            $("#magick_header").text($(".magick h2").text() + " (Disconnected.)"); 
+            //reset(true);  
+            window.alert("Disconnected.")       
+            $("#magick_header").text($(".magick h2").text()); 
           })
 
           p.on('error', err => console.log('error', err))
