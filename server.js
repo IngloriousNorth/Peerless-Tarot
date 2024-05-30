@@ -57,7 +57,7 @@ function resetTimer(trips){
   Signal "sequence" saved to oracle tripcode in :readers
 */
 
-app.post("/initiate", [check("trips").not().isEmpty().trim().escape(), check("sum").trim().escape(), check("wallet_address").trim().escape(), check("sequence").not().isEmpty().custom(value => {
+app.post("/initiate", [check("trips").not().isEmpty().trim().escape(), check("trading").not().isEmpty().trim().escape(), check("sum").trim().escape(), check("wallet_address").trim().escape(), check("sequence").not().isEmpty().custom(value => {
     try {
       JSON.parse(value);
     } catch (e) {
@@ -78,6 +78,9 @@ app.post("/initiate", [check("trips").not().isEmpty().trim().escape(), check("su
       clearTimeout(readers[trips].timer);
 
     readers[trips] = {};
+    readers[trips].trading = req.body.trading === "false" ? false : true;
+    console.log("TRADING : " + readers[trips].trading)
+
     readers[trips].sequence = JSON.parse(he.decode(req.body.sequence));
     readers[trips].sum = req.body.sum ? req.body.sum : 0;
     readers[trips].wallet_address = req.body.wallet_address;
@@ -195,12 +198,14 @@ app.get("/readers", function(req,res){
   var tripcodes = [];
   var wallet_addresses = [];
   var sums = [];
+  var trading = []
   for(const reader in readers){
     wallet_addresses.push(readers[reader].wallet_address);
     sums.push(readers[reader].sum);
     tripcodes.push(readers[reader].tripcode);
+    trading.push(readers[reader].trading)
   }
-  res.json({tripcodes : tripcodes, sums : sums, wallet_addresses: wallet_addresses });
+  res.json({tripcodes : tripcodes, trading : trading, sums : sums, wallet_addresses: wallet_addresses });
 })
 
 app.get("/web3/:tripcode", check("tripcode").not().isEmpty().trim().escape(), function(req,res){
