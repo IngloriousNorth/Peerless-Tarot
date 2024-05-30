@@ -56,13 +56,23 @@ header{
 h2{
 	font-size: 14px;
 	padding: 4px;
+	text-align:left;
+	font-family:"Roboto", sans-serif;
+}
+
+button{
+	font-family:"Roboto", sans-serif;
 }
 
 .menu li{
 	float: left;
-	padding: 33px;
+	padding: 13px;
 	font-size: 19px;
 }
+
+
+
+
 
 header{
 	height:223px;
@@ -92,14 +102,14 @@ button{
 }
 
 img{
-	margin-left:13px;
-	margin-top:21px;
+	margin-left:27px;
+	margin-top:16px;
 	float:left;
 }
 
 h2{
 	font-size:37px;
-	text-align:center;
+	text-align:left;
 	color:mediumvioletred;
 	font-family:"Roboto", "Times New Roman", sans-serif;
 }
@@ -107,8 +117,8 @@ h2{
 .menu{
 	width:100%;
 	position:fixed;
-	top:155px;
-	left:13px;
+	top:171px;
+	left:14px;
 	z-index:999;
 }
 
@@ -134,8 +144,8 @@ h1{
 
 h1 a{
 	font-size: 36px;
-	font-family: 'Oswald', sans-serif;
-	color: CRIMSON;
+	font-family: 'Open Sans', sans-serif;
+	color: PALEVIOELTRED;
 }
 
 .magick_li{
@@ -149,7 +159,7 @@ h1 a{
 
 .ANCHOR_partial{
 	margin-top: 32px;
-	margin-left: 33px;
+	margin-left: 27px;
 }
 
 
@@ -234,6 +244,30 @@ h1 a{
 	padding: 7px;
 }
 
+label {
+  padding:12px 0px 7px 0px;
+  
+  display: block;
+  padding-left: 15px;
+  text-indent: -15px;
+}
+
+label span{
+	padding-right:55px;
+	font-size:40px;
+}
+
+#trading {
+  text-align:right;
+  width: 13px;
+  height: 13px;
+  padding: 5px;
+  margin:0;
+  vertical-align: bottom;
+  position: relative;
+  top: -1px;
+  *overflow: hidden;
+}
 
 /* Smartphones ----------- */
 @media only screen and (max-width: 1337px) {

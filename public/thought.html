@@ -14,7 +14,8 @@
     <link rel="stylesheet" href="styles/main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Oswald:wght@300&family=Roboto:ital,wght@1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Roboto:ital,wght@1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,777;1,777&display=swap" rel="stylesheet">
   </head>
   <body>
     <header><img src="https://cdn.glitch.global/17b2c547-57fb-43f1-a497-e610a2d8fcfd/gifmaker_me(1).gif?v=1717046968344">
@@ -61,6 +62,8 @@
         <form>
           <input id="tripcode" type="password" placeholder="tripcode (sans-#)">
           <br><input id="wallet_address" placeholder = "ETH addr. (opt)"><br>
+          <label><span>TRADING</span><input type="checkbox" id="trading"></label>
+          <br>
           <button id="initiate_button" type="submit">Initiate</button>
           <button id="disconnect_button" class="hidden">Disconnect</button>
         </form>
