@@ -190,8 +190,20 @@ h1 a{
 }
 
 .ANCHOR_partial span{
-	font-family:"Times New Roman", serif;
+	font-family:"Playfair Display", serif;
 	font-size:16px;
+}
+
+.ANCHOR_partial p{
+	font-family:"Playfair Display", serif;
+}
+
+input::placeholder{
+	font-family:"Playfair Display", serif;
+}
+
+textarea{
+	font-family:"Playfair Display", serif;
 }
 
 .key span{
