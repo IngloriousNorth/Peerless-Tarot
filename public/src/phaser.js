@@ -31,7 +31,7 @@ $(document).ready(function(){
     $("#interpretationHeader").hide();
     $("#querent_textarea_trading").show();
     $("#query_submitted_trading").text("");
-    $("#oracle_interpretation").text("")
+    $("#oracle_interpretation").text("").hide();
     $("#interpretationTradingSpan").text("");
     $(".tradingOracle").hide();
     $("#awaiting_oracle").show();
@@ -265,7 +265,7 @@ $("#initiate_button").click(function(e){
     $(".interpretation_button").prop("disabled", true)
     $(".interpretation").fadeOut();
     $(".interpretation_button").fadeOut();
-    $("#oracle_interpretation").text($(".interpretation").val())
+    $("#oracle_interpretation").text($(".interpretation").val()).show();
     if($("#trading").is(":checked")){
       $(".queryTrading").fadeIn(1337)
       $("#queryTrading").click(function(){
@@ -320,7 +320,7 @@ $("#initiate_button").click(function(e){
     }
     else{
       $("#awaiting_eth").text("Payment failure. Please disconnect.")
-      $("#disconnect_button").fadeIn(1337)
+      $("#disconnect_button").show();
     }
     count++;
     
@@ -340,8 +340,8 @@ $("#initiate_button").click(function(e){
 
       $("#awaiting").text("Awaiting Peer");
       $("#awaiting").fadeIn(2399);
-      $("#initiate_button").fadeOut(1337);
-      $("#disconnect_button").fadeIn(3333);
+      $("#initiate_button").hide();
+      $("#disconnect_button").show();
       $("#disconnect_button").prop("disabled", false)
       $(".oracle h2").text(data.tripcode + ($("#trading").is(":checked") ? " (TRADING)" : ""));
       

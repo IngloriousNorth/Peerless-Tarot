@@ -147,6 +147,10 @@ span{
 	border:2px dotted cyan;
 }
 
+#oracle_interpretation{
+	display:none;
+}
+
 h1{
 	position:fixed;
 	top:2px;
