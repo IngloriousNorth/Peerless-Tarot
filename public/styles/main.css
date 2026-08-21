@@ -77,7 +77,7 @@ button{
 
 header{
 	height:100px;
-	background-color:cyan;
+	background-color:darkcyan;
 	box-shadow:2px 2px 3px darkviolet;
 }
 
@@ -130,7 +130,7 @@ h2{
 
 .menu li a{
 	font-family: "Nanum Pen Script", Arial;
-	color: darkcyan;
+	color: cyan;
 	font-size:23px;
 }
 
@@ -239,12 +239,12 @@ label{
 
 button{
 	background-color:darkcyan;
-	box-shadow:2px 2px 2px lightgoldenrodyellow;
+	box-shadow:2px 2px 2px #50C777;
 	color:cyan;
 }
 
 button:hover{
-	background-color:darkgoldenrod;
+	background-color:coral;
 }
 
 h3{
