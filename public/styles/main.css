@@ -131,6 +131,7 @@ h2{
 .menu li a{
 	font-family: "Nanum Pen Script", Arial;
 	color: darkslateblue;
+	text-shadow:1px 1px lightgoldenrodyellow;
 	font-size:23px;
 }
 
