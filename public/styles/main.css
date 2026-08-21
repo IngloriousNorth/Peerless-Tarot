@@ -162,8 +162,8 @@ h1{
 h1 a{
 	font-size: 36px;
 	font-family: 'Elsie', sans-serif;
-	color: goldenrod;
-	text-shadow:1px 1px palevioletred;
+	color: palevioletred;
+	text-shadow:1px 1px blue;
 }
 
 .reading{
