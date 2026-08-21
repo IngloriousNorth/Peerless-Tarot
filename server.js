@@ -1,227 +1,186 @@
-const express = require('express')
-const app = express()
-const port = 3000
-
-//4chan tripcode generator
+const express = require('express');
+const app = express();
+const path = require('path');
+const bodyParser = require('body-parser');
 const tripcode = require('tripcode');
-
-//sanitization and validation
 const { check, validationResult } = require('express-validator');
-//decodes from validator
 const he = require('he');
 
-//other handlers
-const path = require('path')
-const bodyParser= require('body-parser')
+// Upstash Redis setup (Add UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN in Vercel settings)
+const { Redis } = require('@upstash/redis');
+const redis = Redis.fromEnv();
 
+const EXPIRATION_SECONDS = 466; // ~7.7 minutes (466200ms)
 
-app.use( bodyParser.json() );       // to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({ extended: true }))
-
-// Express Middleware for serving static files
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-/*
-  this is the only db, it is local and lists readers in this format:
-  readers { 
-    "tripcode" {
-      sequence : "initiatorSequence",
-      hail : "peerSequence"        
-    },
-    "tripcode2" { etc.
-  }
-*/
-var readers = {};
-
-/*
-  After 5 minutes of inactivity delete reader tripcode from db
-*/
-app.post("/pong", function(req,res){
-  resetTimer();
-  res.end();
-})
-
-//the timer keeps going and resets the same name
-function resetTimer(trips){
-  clearTimeout(readers[trips].timer);
-  readers[trips].timer = setTimeout(function(){
-    delete readers[trips];
-  }, 466200)
+// Helper to update/reset TTL
+async function setReader(trips, data) {
+  await redis.set(`reader:${trips}`, JSON.stringify(data), { ex: EXPIRATION_SECONDS });
 }
 
+async function getReader(trips) {
+  const data = await redis.get(`reader:${trips}`);
+  return data ? (typeof data === 'string' ? JSON.parse(data) : data) : null;
+}
 
-//server responses in order of client operations
-
-/*
-  An Oracle initiates a data-channel
-  Signal "sequence" saved to oracle tripcode in :readers
-*/
-
-app.post("/initiate", [check("trips").not().isEmpty().trim().escape(), check("trading").not().isEmpty().trim().escape(), check("sum").trim().escape(), check("wallet_address").trim().escape(), check("sequence").not().isEmpty().custom(value => {
-    try {
-      JSON.parse(value);
-    } catch (e) {
-      return false;
-    }
-    return true;
-  }).trim().escape()], function(req,res){
-  
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    var trips = tripcode(he.decode(req.body.trips));
-    console.log("INITIATED: " + trips);
-
-    //clear the timeout for duplicate entry
-    if(readers[trips])
-      clearTimeout(readers[trips].timer);
-
-    readers[trips] = {};
-    readers[trips].trading = req.body.trading === "false" ? false : true;
-    console.log("TRADING : " + readers[trips].trading)
-
-    readers[trips].sequence = JSON.parse(he.decode(req.body.sequence));
-    readers[trips].sum = req.body.sum ? req.body.sum : 0;
-    readers[trips].wallet_address = req.body.wallet_address;
-    readers[trips].tripcode = trips;
-    
-    resetTimer(trips); 
-    res.json({tripcode : trips});
-})
-
-//ALL YOUR BASE ARE BELONG TO US
-
-/*
-  Peer retrieves sequence from initial Oracle; 
-  sequence entered on Peer clientside
-*/
-
-app.get("/sequence/:tripcode", [check("tripcode").not().isEmpty().trim().escape()], function(req,res){
-  const errors = validationResult(req);
-   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
-  var tripcode = he.decode(req.params.tripcode);
-  
-  console.log("TRIPCODE: " + tripcode);
-
-  res.json({sequence : JSON.stringify(readers[tripcode].sequence), sum:readers[tripcode].sum, wallet_address: readers[tripcode].wallet_address});
-})
-
-/*
-  Oracle sequence posted to peer client; 
-  magick established; 
-  final sequence for Oracle generated, saved to .hail property of :readers.tripcode
-  (so to get the Peer response sequence in your Oracle it's readers.tripcode.hail)
-  The hail property is longpolled by the Oracle after initiate is called from the client
-*/
-app.post("/magick", [check("tripcode").not().isEmpty().trim().escape(), check("sum").trim().escape(), check("wallet_address").trim().escape(), check("sequence").not().isEmpty().custom(value => {
-    try {
-      JSON.parse(value);
-    } catch (e) {
-      return false;
-    }
-    return true;
-  }).trim().escape()], function(req,res){
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    //wat
-    var tripcode = decodeURIComponent(decodeURIComponent(req.body.tripcode));
-    readers[tripcode].tripcode = tripcode;
-    if(!req.body.wallet_address || !req.body.sum){
-      readers[tripcode].sum = 0;
-      readers[tripcode].wallet_address = "";
-    }
-    else{
-      readers[tripcode].wallet_address = req.body.wallet_address;
-      readers[tripcode].sum = req.body.sum;
-    }
-    console.log("TRIPCODE :" + tripcode);
-    readers[tripcode].hail = JSON.parse(he.decode(req.body.sequence));
-    
-    res.end();
-})
-
-/*
-  Oracle longpolls for Peer response sequence, stored in :readers[tripcode].hail
-*/
-app.get("/hail/:tripcode", [check("tripcode").not().isEmpty().trim().escape(), check("sum").trim().escape(), check("wallet_address").trim().escape()], function(req,res){
-  const errors = validationResult(req);
-   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-  var trips = tripcode(he.decode(req.params.tripcode));
-  if(readers[trips] && readers[trips].hail){
-    res.json({sequence : JSON.stringify(readers[trips].hail), sum: readers[trips].sum, wallet_address: readers[trips].wallet_address});
-  }
-  else{
-    res.end();
-  }
-})
-
-/* 
-  Connection established, remove tripcode from :readers
-*/
-app.post("/established/:tripcode", [check("tripcode").not().isEmpty().trim().escape()], function(req,res){
-  const errors = validationResult(req);
-   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-  var trips = tripcode(he.decode(req.params.tripcode));
-  if(readers[trips]){
-    clearTimeout(readers[trips].timer)
-    delete readers[trips];
-  }
-  res.json({sum : readers[trips] ? readers[trips].sum : 0, wallet_address : readers[trips] ? readers[trips].wallet_address : ""});
-})
-
-app.post("/delete_oracle/:tripcode", [check("tripcode").not().isEmpty().trim().escape()], function(req,res){
-  var trips = tripcode(he.decode(req.params.tripcode));
-  console.log("DELETING: " + trips);
-  if(readers[trips]){
-    clearTimeout(readers[trips].timer);
-
-    delete readers[trips];
+app.post("/pong", async (req, res) => {
+  const { trips } = req.body;
+  if (trips) {
+    const reader = await getReader(trips);
+    if (reader) await setReader(trips, reader); // Resets TTL
   }
   res.end();
-})
+});
 
-/*
-  #peer view on clientside calls this
-  generates a list of Oracles (as tripcodes) from :readers
-*/
-app.get("/readers", function(req,res){
-  var tripcodes = [];
-  var wallet_addresses = [];
-  var sums = [];
-  var trading = []
-  for(const reader in readers){
-    wallet_addresses.push(readers[reader].wallet_address);
-    sums.push(readers[reader].sum);
-    tripcodes.push(readers[reader].tripcode);
-    trading.push(readers[reader].trading)
-  }
-  res.json({tripcodes : tripcodes, trading : trading, sums : sums, wallet_addresses: wallet_addresses });
-})
-
-app.get("/web3/:tripcode", check("tripcode").not().isEmpty().trim().escape(), function(req,res){
+app.post("/initiate", [
+  check("trips").not().isEmpty().trim().escape(),
+  check("trading").not().isEmpty().trim().escape(),
+  check("sum").trim().escape(),
+  check("wallet_address").trim().escape(),
+  check("sequence").not().isEmpty().custom(value => {
+    try { JSON.parse(value); } catch (e) { return false; }
+    return true;
+  }).trim().escape()
+], async (req, res) => {
   const errors = validationResult(req);
-   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+
+  const trips = tripcode(he.decode(req.body.trips));
+  console.log("INITIATED: " + trips);
+
+  const readerData = {
+    trading: req.body.trading !== "false",
+    sequence: JSON.parse(he.decode(req.body.sequence)),
+    sum: req.body.sum ? req.body.sum : 0,
+    wallet_address: req.body.wallet_address,
+    tripcode: trips,
+    hail: null
+  };
+
+  await setReader(trips, readerData);
+  res.json({ tripcode: trips });
+});
+
+app.get("/sequence/:tripcode", [check("tripcode").not().isEmpty().trim().escape()], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+
+  const tc = he.decode(req.params.tripcode);
+  const reader = await getReader(tc);
+
+  if (!reader) return res.status(404).json({ error: "Session expired or not found" });
+
+  res.json({
+    sequence: JSON.stringify(reader.sequence),
+    sum: reader.sum,
+    wallet_address: reader.wallet_address
+  });
+});
+
+app.post("/magick", [
+  check("tripcode").not().isEmpty().trim().escape(),
+  check("sum").trim().escape(),
+  check("wallet_address").trim().escape(),
+  check("sequence").not().isEmpty().custom(value => {
+    try { JSON.parse(value); } catch (e) { return false; }
+    return true;
+  }).trim().escape()
+], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+
+  const tc = decodeURIComponent(decodeURIComponent(req.body.tripcode));
+  const reader = await getReader(tc) || {};
+
+  reader.tripcode = tc;
+  reader.wallet_address = req.body.wallet_address || "";
+  reader.sum = req.body.sum || 0;
+  reader.hail = JSON.parse(he.decode(req.body.sequence));
+
+  await setReader(tc, reader);
+  res.end();
+});
+
+app.get("/hail/:tripcode", [
+  check("tripcode").not().isEmpty().trim().escape(),
+  check("sum").trim().escape(),
+  check("wallet_address").trim().escape()
+], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+
+  const trips = tripcode(he.decode(req.params.tripcode));
+  const reader = await getReader(trips);
+
+  if (reader && reader.hail) {
+    res.json({
+      sequence: JSON.stringify(reader.hail),
+      sum: reader.sum,
+      wallet_address: reader.wallet_address
+    });
+  } else {
+    res.end();
   }
-  var tripcode = he.decode(req.params.tripcode);
-  return res.json({sum : readers[tripcode].sum, wallet_address: readers[tripcode].wallet_address})
-})
+});
+
+app.post("/established/:tripcode", [check("tripcode").not().isEmpty().trim().escape()], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+
+  const trips = tripcode(he.decode(req.params.tripcode));
+  const reader = await getReader(trips);
+
+  if (reader) {
+    await redis.del(`reader:${trips}`);
+  }
+
+  res.json({
+    sum: reader ? reader.sum : 0,
+    wallet_address: reader ? reader.wallet_address : ""
+  });
+});
+
+app.post("/delete_oracle/:tripcode", [check("tripcode").not().isEmpty().trim().escape()], async (req, res) => {
+  const trips = tripcode(he.decode(req.params.tripcode));
+  await redis.del(`reader:${trips}`);
+  res.end();
+});
+
+app.get("/readers", async (req, res) => {
+  const keys = await redis.keys('reader:*');
+  const tripcodes = [], wallet_addresses = [], sums = [], trading = [];
+
+  for (const key of keys) {
+    const reader = await getReader(key.replace('reader:', ''));
+    if (reader) {
+      wallet_addresses.push(reader.wallet_address);
+      sums.push(reader.sum);
+      tripcodes.push(reader.tripcode);
+      trading.push(reader.trading);
+    }
+  }
+
+  res.json({ tripcodes, trading, sums, wallet_addresses });
+});
+
+app.get("/web3/:tripcode", check("tripcode").not().isEmpty().trim().escape(), async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+
+  const tc = he.decode(req.params.tripcode);
+  const reader = await getReader(tc);
+
+  if (!reader) return res.status(404).json({ error: "Not found" });
+
+  return res.json({ sum: reader.sum, wallet_address: reader.wallet_address });
+});
 
 app.all('*', (req, res) => {
-  res.sendFile(__dirname + '/public/thought.html')
-})
+  res.sendFile(path.join(__dirname, 'public', 'thought.html'));
+});
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
-
+// Export app for Vercel Serverless Function engine
+module.exports = app;
