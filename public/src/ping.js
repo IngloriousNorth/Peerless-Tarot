@@ -54,36 +54,43 @@ function threeThreeThreeSpread(cb){
 	});
 }
 
-function getData(arrDigits, cb){
-	//$.get("https://qrng.anu.edu.au/API/jsonI.php?length=1&type=uint8&size=6", function(data){
-		console.log("draw");
-		/*if(data.data && data.data[0]){
-			var data2 = data.data[0];
-			//console.log(data);
+function getData(arrDigits, cb) {
+  const proxyUrl = "https://Selapian--2f58e6388fb311f1b0781607ee4eb77e.web.val.run";
 
-			//the reason the errors get produced is because the API gives numbers 1-255 without an option to minify the Set so we have to recursively call the fn until we get num 0-77
-			if(Math.abs(data2) <= 231 && arrDigits.indexOf(Math.abs(data2)) === -1){	
-				cb(null, data2 % 77);
-			}
-			else{			
-				//so apparently this form of recursion causes an error?
-				
-				getData(arrDigits, cb);						
-			}
-		}
-		else{*/
-			function randomIntFromInterval(min, max) { // min and max included 
-			  return Math.floor(Math.random() * (max - min + 1) + min)
-			}
+  $.get(proxyUrl)
+    .done(function(data) {
+      console.log("draw");
+      if (data && typeof data.number === "number") {
+        // Map 0-255 down to 0-76 (77 cards total)
+        var cardIndex = data.number % 77;
 
-			const rndInt = randomIntFromInterval(0, 77)
-			if(arrDigits.indexOf(Math.abs(rndInt))=== -1){
-				cb(null, rndInt);
+        // Check if card has already been drawn
+        if (arrDigits.indexOf(cardIndex) === -1) {
+          console.log("Card " + cardIndex + " QRNG Success!")
+          cb(null, cardIndex);
+        } else {
+          // Card already drawn; retry
+          getData(arrDigits, cb);
+        }
+      } else {
+        fallbackRandom(arrDigits, cb);
+      }
+    })
+    .fail(function() {
+      console.warn("Val.town proxy unreachable; falling back to local math random.");
+      fallbackRandom(arrDigits, cb);
+    });
+}
 
-			}
-			else{
-				getData(arrDigits, cb);
-			}
-		//}
-	//})
-}	
+function fallbackRandom(arrDigits, cb) {
+  function randomIntFromInterval(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  const rndInt = randomIntFromInterval(0, 76);
+  if (arrDigits.indexOf(rndInt) === -1) {
+    cb(null, rndInt);
+  } else {
+    getData(arrDigits, cb);
+  }
+}
