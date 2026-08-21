@@ -77,7 +77,8 @@ button{
 
 header{
 	background-color:darkcyan;
-	box-shadow:2px 2px 3px darkviolet;
+	box-shadow:3px 4px 5px mediumvioletred;
+	border-bottom:2px solid white;
 }
 
 input{
