@@ -98,7 +98,6 @@ button{
 
 button:hover{
 	cursor:pointer;
-	background:palevioletred;
 }
 
 .readers li{
@@ -259,7 +258,7 @@ button{
 }
 
 button:hover{
-	background-color:coral;
+	background-color:palevioletred;
 }
 
 h3{
