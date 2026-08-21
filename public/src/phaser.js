@@ -370,7 +370,7 @@ $("#initiate_button").click(function(e){
   })
 
   p.on('close', () => {
-    //reset();
+    reset();
   })
 
   p.on('error', err => console.log('error', err))
