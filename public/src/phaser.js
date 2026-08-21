@@ -95,7 +95,6 @@ $(document).ready(function(){
 
 $(".ANCHOR").click(function(e){
   e.preventDefault();
-  location.reload(); //this needs to completely delete p 
   //reset();
 })
 
