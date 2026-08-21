@@ -48,7 +48,7 @@ table {
 }
 
 header{
-	height: 123px;
+	height: 100px;
 }
 
 body{
@@ -59,7 +59,7 @@ h2{
 	font-size: 14px;
 	
 	text-align:left;
-	font-family:"Roboto", sans-serif;
+	font-family:"Nanum Pen Script", sans-serif;
 }
 
 button{
@@ -77,8 +77,8 @@ button{
 
 
 header{
-	height:223px;
-	background-color:hotpink;
+	height:100px;
+	background-color:royalblue;
 	box-shadow:2px 2px 3px palegoldenrod;
 }
 
@@ -90,11 +90,11 @@ input{
 }
 
 button{
-	width:98px;
+	width:150px;
 	height:55px;
 	border-radius:13px;
 	margin-top:13px;
-	font-size:20px;
+	font-size:16px;
 }
 
 button:hover{
@@ -118,20 +118,19 @@ h2{
 	font-size:26px;
 	text-align:left;
 	color:mediumvioletred;
-	font-family:"Roboto", "Times New Roman", sans-serif;
 }
 
 .menu{
 	width:100%;
 	position:fixed;
-	top:171px;
+	top:60px;
 	left:14px;
 	z-index:999;
 }
 
 .menu li a{
 	font-family: "Nanum Pen Script", Arial;
-	color: lightgoldenrodyellow;
+	color: gold;
 	font-size:23px;
 }
 
@@ -145,18 +144,17 @@ h2{
 
 h1{
 	position:fixed;
-	top:13px;
+	top:2px;
 	width:288px;
 	font-size: 48px;
-	padding:13px;
+	left:27px;
 	float:left;
-	margin-left:14px;
 }
 
 h1 a{
 	font-size: 36px;
 	font-family: 'Elsie', sans-serif;
-	color: rebeccapurple;
+	color: hotpink;
 }
 
 .magick_li{
@@ -175,7 +173,7 @@ h1 a{
 	overflow-x:auto;
 	position:fixed;
 	width:100%;
-	height:calc(100% - 263px);
+	height:calc(100% - 100px);
 }
 
 
@@ -191,7 +189,7 @@ h1 a{
 }
 
 .ANCHOR_partial span{
-	font-family:"Nanum Pen Script",Arial;
+	font-family:"Times New Roman", serif;
 	font-size:16px;
 }
 
@@ -221,8 +219,12 @@ h1 a{
 }
 
 button{
-	background-color:darkskyblue;
+	background-color:coral;
 	box-shadow:2px 2px 0px lightgoldenrodyellow;
+}
+
+button:hover{
+	background-color:lightcoral;
 }
 
 h3{
