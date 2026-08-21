@@ -223,9 +223,9 @@ $("#initiate_button").click(function(e){
     connected = true;
     console.log('CONNECT')
     beep();
-    $("#awaiting").fadeOut();
+    $("#awaiting").hide();
     $("#connected").show();
-    $(".query_submission").fadeIn()
+    $(".query_submission").show()
     //$("#awaiting_query").fadeIn();
     $(".draw").fadeIn(777);
     $(".draw").prop("disabled", true)
@@ -239,7 +239,7 @@ $("#initiate_button").click(function(e){
       $(".draw").prop("disabled",true)
       $(".draw").fadeOut(5555);
       $(".interpretation").val("");  
-      $("#interpretationHeader").fadeIn() 
+      $("#interpretationHeader").show();
       $(".interpretation").fadeIn(777);
       $(".interpretation_button").fadeIn(777) 
 
