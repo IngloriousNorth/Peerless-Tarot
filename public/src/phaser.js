@@ -110,43 +110,43 @@ ANCHOR.load();
 
 function assembleSpread(threeThreeThree){
   console.log("HERE");
-  $("#data_1").show();
+  $(".data").show();
   console.log(threeThreeThree);
-  $("#tarot_" + Math.abs(parseInt(threeThreeThree[0]))).clone().appendTo($("#data_1 #key_2"));
-  $("#tarot_" + Math.abs(parseInt(threeThreeThree[1]))).clone().appendTo($("#data_1 #key_1"));
-  $("#tarot_" + Math.abs(parseInt(threeThreeThree[2]))).clone().appendTo($("#data_1 #key_3"));
+  $("#tarot_" + Math.abs(parseInt(threeThreeThree[0]))).clone().appendTo($(".data .key_2"));
+  $("#tarot_" + Math.abs(parseInt(threeThreeThree[1]))).clone().appendTo($(".data .key_1"));
+  $("#tarot_" + Math.abs(parseInt(threeThreeThree[2]))).clone().appendTo($(".data .key_3"));
 
   console.log(Math.abs(threeThreeThree[0]) + " " + Math.abs(threeThreeThree[1]) + " " + Math.abs(threeThreeThree[2]))
 
   if(threeThreeThree[0] < 0){
-   $("#data_1 #key_2").append("<span class='title'>" + "-" + $("#tarot_" + Math.abs(threeThreeThree[0])).attr("class") + "</class>");
+   $(".data .key_2").append("<span class='title'>" + "-" + $("#tarot_" + Math.abs(threeThreeThree[0])).attr("class") + "</class>");
    flip($(".data #tarot_" + Math.abs(threeThreeThree[0])));
   }
   else{
-    $("#data_1 #key_2").append("<span class='title'>" + $("#tarot_" + Math.abs(threeThreeThree[0])).attr("class") + "</class>");
+    $(".data .key_2").append("<span class='title'>" + $("#tarot_" + Math.abs(threeThreeThree[0])).attr("class") + "</class>");
   }
-  $("#data_1 #key_2").fadeIn(1000);
+  $(".data .key_2").fadeIn(1000);
   if(threeThreeThree[1] < 0){
-    $("#data_1 #key_1").append("<span class='title'>" + "-" + $("#tarot_" + Math.abs(threeThreeThree[1])).attr("class") + "</class>");
+    $(".data .key_1").append("<span class='title'>" + "-" + $("#tarot_" + Math.abs(threeThreeThree[1])).attr("class") + "</class>");
     flip($(".data #tarot_" + Math.abs(threeThreeThree[1])));
   }
   else{
-    $("#data_1 #key_1").append("<span class='title'>" + $("#tarot_" + Math.abs(threeThreeThree[1])).attr("class") + "</class>");
+    $(".data .key_1").append("<span class='title'>" + $("#tarot_" + Math.abs(threeThreeThree[1])).attr("class") + "</class>");
   }
-  $("#data_1 #key_1").fadeIn(2000);
+  $(".data .key_1").fadeIn(2000);
   if(threeThreeThree[2] < 0){
-    $("#data_1 #key_3").append("<span class='title'>" + "-" + $("#tarot_" + Math.abs(threeThreeThree[2])).attr("class") + "</class>");
+    $(".data .key_3").append("<span class='title'>" + "-" + $("#tarot_" + Math.abs(threeThreeThree[2])).attr("class") + "</class>");
     flip($(".data #tarot_" + Math.abs(threeThreeThree[2])));
   }
   else{    
-   $("#data_1 #key_3").append("<span class='title'>" + $("#tarot_" + Math.abs(threeThreeThree[2])).attr("class") + "</class>");
+   $(".data .key_3").append("<span class='title'>" + $("#tarot_" + Math.abs(threeThreeThree[2])).attr("class") + "</class>");
   }
-  $("#data_1 #key_3").fadeIn(3000);
+  $(".data .key_3").fadeIn(3000);
 
 
-  $("#data_1 #key_1").css({'transform' : 'rotate('+ (Math.floor(Math.random() * 8) - 8) +'deg)'})
-  $("#data_1 #key_2").css({'transform' : 'rotate('+ (Math.floor(Math.random() * 8) - 8) +'deg)'})
-  $("#data_1 #key_3").css({'transform' : 'rotate('+ (Math.floor(Math.random() * 8) - 8) +'deg)'})
+  $(".data .key_1").css({'transform' : 'rotate('+ (Math.floor(Math.random() * 8) - 8) +'deg)'})
+  $(".data .key_2").css({'transform' : 'rotate('+ (Math.floor(Math.random() * 8) - 8) +'deg)'})
+  $(".data .key_3").css({'transform' : 'rotate('+ (Math.floor(Math.random() * 8) - 8) +'deg)'})
   $(".reading_h3").fadeIn();
   
   
@@ -501,105 +501,6 @@ function getReaders(cb){
             console.log('CONNECT')   
             $(".query").fadeIn(333);            
             $(".magick_connecting").fadeOut(100);
-            if(data.sum > 0 && data.wallet_address){
-                      const getAccount = async () => {
-                        const accounts = await web3.eth.getAccounts();
-                        const account = accounts[0];
-
-                        console.log("ACCOUNT : " + account)
-                        return account;
-                      }
-                      if (window.ethereum) {
-                      window.web3 = new Web3(ethereum);
-                      try {
-                        await web3.eth.requestAccounts();
-                        console.log("WEB3 CONNECTED!")
-                      
-                        
-
-                      } catch (err) {
-                        console.log("ACCESS Web3 DENIED")
-                        alert("Connect a Metamask wallet to use dAPp features!!!!")
-                        p.send("false666");
-                        $(".web3").prop("disabled", false)
-                        return;
-                       // $('#status').html('User denied account access', err)
-                      }
-                   /* } else if (window.web3) {
-                      window.web3 = new Web3(web3.currentProvider)
-                      initPayButton()
-                    */} else {
-                        alert("Connect a Metamask wallet to use dapp features!!!!")
-                          $(".web3").prop("disabled", false)
-                          p.send("false666")
-                        return;
-                        console.log("NO METAMASK INSTALLED!!!")
-                        //$('#status').html('No Metamask (or other Web3 Provider) installed')
-                      }
-                      const account = await getAccount();
-                      const quantumaddress = "0xaafB904FFDb0552393651a4E02A88c9f016F41F5"
-                      //"0xe74b0B9AFC8fB6004D802D75C55e86Db54A8B538"
-                      const estimate_gas = await web3.eth.estimateGas({
-                          'from': account,
-                          'to': quantumaddress
-                       
-                      });
-
-                      const estimate_gas2 = await web3.eth.estimateGas({
-                        'from' : account,
-                        'to' : data.wallet_address
-                      })
-
-                      const suggestion_gas = await web3.eth.getGasPrice();
-                      var hashes = 0;
-                      function checkHashes(){
-                        if(hashes == 2){
-                                $(".query textarea").prop("disabled", false);
-                                $(".query button").prop("disabled", false)
-                                p.send("true666");
-                          }
-                      }
-                      web3.eth.sendTransaction({
-                            to:quantumaddress, 
-                            from:account,
-                            gasPrice: web3.utils.toHex(suggestion_gas),
-                            gasLimit: web3.utils.toHex(estimate_gas),
-                            value:web3.utils.toWei(data.sum * .75, "ether")
-                          }).once("transactionHash", function(hash){
-                            console.log(hash);
-                          }).on("sent",function(){
-                              web3.eth.sendTransaction({
-                              to:data.wallet_address, 
-                              from:account,
-                              gasPrice: web3.utils.toHex(suggestion_gas),
-                              gasLimit: web3.utils.toHex(estimate_gas2),
-                              value:web3.utils.toWei(data.sum * .25, "ether")
-                            }).once("transactionHash", function(hash){
-                              console.log(hash);
-                            }).on("sent",function(){
-                                
-                             })
-                            .on('receipt', function(receipt){
-                              
-                              hashes++;
-                              checkHashes();
-                              
-                              }).catch(function(err){
-                                p.send("false666");
-                                alert(err);
-                           })         
-                           })
-                          .on('receipt', function(receipt){
-                            hashes++ 
-                            checkHashes();
-                            }).catch(function(err){
-                              p.send("false666");
-                              alert(err);
-                         })
-                    }
-                    else{
-                      p.send("true666");
-                    }
               $("#query").click(async function(e){
                 e.preventDefault();
                 var query = $(".query textarea").val();
@@ -626,6 +527,7 @@ function getReaders(cb){
                 //data is an array
                 arr = JSON.parse(data);
                 if(ANCHOR.page() === "magick"){
+                  console.log(arr);
                   assembleSpread(arr);
                   $([document.documentElement, document.body]).animate({
                     scrollTop: $(".reading").offset().top

@@ -79,6 +79,10 @@ header{
 	background-color:darkcyan;
 	box-shadow:3px 4px 5px mediumvioletred;
 	border-bottom:2px solid white;
+	position:fixed;
+	top:0px;
+	left:0px;
+	z-index:9999;
 }
 
 input{
