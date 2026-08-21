@@ -56,14 +56,14 @@ body{
 }
 
 h2{
-	font-size: 14px;
+	font-size: 18px;
 	
 	text-align:left;
-	font-family:"Nanum Pen Script", sans-serif;
+	font-family:"Elsie", sans-serif;
 }
 
 button{
-	font-family:"Elsie", sans-serif;
+	font-family:"Nanum Pen Script", sans-serif;
 }
 
 .menu li{
@@ -78,8 +78,8 @@ button{
 
 header{
 	height:100px;
-	background-color:royalblue;
-	box-shadow:2px 2px 3px palegoldenrod;
+	background-color:lightcoral;
+	box-shadow:2px 2px 3px darkviolet;
 }
 
 input{
@@ -94,7 +94,7 @@ button{
 	height:55px;
 	border-radius:13px;
 	margin-top:13px;
-	font-size:16px;
+	font-size:20px;
 }
 
 button:hover{
@@ -115,9 +115,9 @@ img{
 }
 
 h2{
-	font-size:26px;
+	font-size:32px;
 	text-align:left;
-	color:black;
+	color:darkslateblue;
 }
 
 .menu{
@@ -130,7 +130,7 @@ h2{
 
 .menu li a{
 	font-family: "Nanum Pen Script", Arial;
-	color: gold;
+	color: darkslateblue;
 	font-size:23px;
 }
 
@@ -154,7 +154,8 @@ h1{
 h1 a{
 	font-size: 36px;
 	font-family: 'Elsie', sans-serif;
-	color: hotpink;
+	color: darkviolet;
+	text-shadow:3px 3px gold;
 }
 
 .magick_li{
@@ -219,12 +220,13 @@ h1 a{
 }
 
 button{
-	background-color:coral;
-	box-shadow:2px 2px 0px lightgoldenrodyellow;
+	background-color:darkviolet;
+	box-shadow:2px 2px 0px mediumvioletred;
+	color:white;
 }
 
 button:hover{
-	background-color:lightcoral;
+	background-color:grass;
 }
 
 h3{
