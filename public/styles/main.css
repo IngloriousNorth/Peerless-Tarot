@@ -166,6 +166,10 @@ h1 a{
 	color: mediumvioletred;
 }
 
+.reading{
+	width:100%;
+}
+
 .magick_li{
 	padding: 12px;
 }
@@ -226,6 +230,8 @@ label{
 	width: 100%;
 	display: inline-block;
 	float: left;
+	border:none;
+	color:palevioletred;
 }
 
 .data{ 
