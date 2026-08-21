@@ -97,6 +97,11 @@ button{
 	font-size:20px;
 }
 
+button:hover{
+	cursor:pointer;
+	background:coral;
+}
+
 .readers li{
 	font-size:18px;
 	padding:18px;
@@ -216,7 +221,7 @@ h1 a{
 }
 
 button{
-	background-color:salmon;
+	background-color:darkskyblue;
 	box-shadow:2px 2px 0px lightgoldenrodyellow;
 }
 
