@@ -191,6 +191,7 @@ h1 a{
 	overflow-x:auto;
 	background-color:black;
 	position:fixed;
+	top:100px;
 	width:calc(100% - 10px);
 	height:calc(100% - 100px);
 }
