@@ -228,11 +228,7 @@ $("#initiate_button").click(function(e){
     $(".query_submission").show()
     //$("#awaiting_query").fadeIn();
     $(".draw").fadeIn(777);
-    $(".draw").prop("disabled", true)
-    if(parseFloat(sum) > 0) {
-      $("#awaiting_eth").text("Awaiting ETH.");
-      $("#awaiting_eth").fadeIn(666)
-    }
+    $(".draw").prop("disabled", false)
     $(".draw").on("click", function(e){
       e.preventDefault();
       console.log("DRAW");
@@ -338,7 +334,7 @@ $("#initiate_button").click(function(e){
    $.post("/initiate", {sequence : JSON.stringify(data), trading : $("#trading").is(":checked"), wallet_address: wallet_address, sum : sum, trips : encodeURIComponent(tripcode)}, function(data){
       $(".connection").show();
 
-      $("#awaiting").text("Awaiting Peer");
+      $("#awaiting").text("Awaiting Peer...");
       $("#awaiting").fadeIn(2399);
       $("#initiate_button").hide();
       $("#disconnect_button").show();

@@ -118,10 +118,10 @@ img{
 }
 
 h2{
-	font-size:30px;
+	font-size:27px;
 	text-align:left;
 	text-decoration: underline;
-	color:lightgoldenrodyellow;
+	color:white;
 }
 
 .menu{
@@ -167,8 +167,7 @@ h1{
 h1 a{
 	font-size: 36px;
 	font-family: 'Elsie', sans-serif;
-	color: palevioletred;
-	text-shadow:1px 1px blue;
+	color: white;
 }
 
 .reading{
@@ -241,7 +240,8 @@ label{
 	display: inline-block;
 	float: left;
 	border:none;
-	color:palevioletred;
+	color:white;
+	font-family:"Playfair Display", serif;
 }
 
 .data{ 
@@ -277,7 +277,7 @@ h3{
 	padding-left:0px;
 	font-size:18px;
 	font-family:"Open Sans", sans-serif;
-	color: palevioletred;
+	color: white;
 }
 
 .interpretation, .interpretationTrading{
