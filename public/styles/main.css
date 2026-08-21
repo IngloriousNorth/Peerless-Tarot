@@ -148,7 +148,8 @@ h2{
 }
 
 textarea{
-	width:100%;
+	width:calc(100% - 54px);
+	margin-right:27px;
 }
 
 h1{
