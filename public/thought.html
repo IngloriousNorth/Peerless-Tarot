@@ -119,8 +119,6 @@
         <form>
           <input id="tripcode" placeholder="tripcode">
           <!--<br><input id="wallet_address" placeholder = "ETH addr. (opt)"><br>!-->
-          <label class="trading">Trading?</label><input type="checkbox" id="trading">
-          <br>
           <button id="initiate_button" type="submit">INITIATE</button>
           <button id="disconnect_button" class="hidden">DISCONNECT</button>
         </form>
@@ -140,31 +138,9 @@
         <br>
         <button class="draw hidden">DRAW</button>
         <br><br>
-        <h3 id="interpretationHeader" class="hidden">ORACLE!</h3>
-        <textarea class="interpretation hidden" maxlength = "512" placeholder="interpretation">
-        </textarea>
-        <br><br><button class="interpretation_button hidden">ANSWER</button>
-        <br><br><span id="oracle_interpretation"></span>
-
-        
-
-        <!--TRADING !-->
-        <div class="queryTrading hidden">        
-          <h3>TRADING QUERENT</h3>
-          <textarea id="querent_textarea_trading" placeholder="Trading Querent"></textarea><br><button id="queryTrading">QUERY</button>
-          <span id="query_submitted_trading"></span><br><br>
-        </div>
-        <br>
-        <div class="finalTrading hidden">
-          <h3>ORACLE!</h3>
-          <br>
-          <span id="awaiting_oracle_trading">Awaiting Oracle...</span>
-          <span id="finalTradingSpan"></span>
-        </div><br><br>
+        <h3 id="interpretationHeader" class="hidden">ORACLE:</h3>
         <div class="reading">
-          <h3 class="reading_h3 hidden">READING</h3>
-          <div class="data" id="data_1">
-            
+          <div class="data" id="data_1">            
             <div class="key_holder">
               <div id="key_2" class="key"></div>
             </div>
@@ -177,6 +153,10 @@
           </div>
         </div>
         <br><br>
+        <textarea class="interpretation hidden" maxlength = "512" placeholder="interpretation">
+        </textarea>
+        <br><br><button class="interpretation_button hidden">READ</button>
+        <br><br><span id="oracle_interpretation"></span>
         <h3 class="finished hidden">Thank you, reading is finished!</h3>
         
       </div>
