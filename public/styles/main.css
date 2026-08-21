@@ -206,6 +206,10 @@ textarea{
 	font-family:"Playfair Display", serif;
 }
 
+label{
+	font-family:"Playfair Display", serif;
+}
+
 .key span{
 	text-align: center;
 	width: 100%;
