@@ -178,10 +178,11 @@ h1{
 	float:left;
 }
 
-h1 a{
+h1 a, h1 a:visited{
 	font-size: 36px;
 	font-family: 'Bitcount Single', sans-serif;
-	color: #50C777;
+	color: darkviolet;
+	text-decoration:none;
 }
 
 .reading{
