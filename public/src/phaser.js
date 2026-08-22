@@ -38,7 +38,7 @@ $(document).ready(function(){
     $("#awaiting_oracle_trading").show();
    
     $("#tripcode").show();
-    $("#query_textarea_trading").fadeOut();
+    $("#query_textarea_trading").hide();
     $(".interpretationTrading").show();
     $(".interpretation_trading_button").show();
     $("#wallet_address").show();
@@ -49,7 +49,7 @@ $(document).ready(function(){
     $("#drawTrading").prop("disabled", false)
     $("#queryTrading").prop("disabled", false)
     $("#wallet_address").prop("disabled", false)    
-    $("#disconnect_button").fadeOut();
+    $("#disconnect_button").hide();
     $("#initiate_button").prop("disabled", false);
     $(".finalTrading span").text("")
     $(".draw").prop("disabled",false);
@@ -66,7 +66,7 @@ $(document).ready(function(){
     $("#query_submitted_trading").text("");
     $("#query_submission").text("");
     $(".interpretation_button").prop("disabled", false)
-    $("#initiate_button").fadeIn();
+    $("#initiate_button").hide();
     $(".interpretation_button").hide();
     $(".magick_connecting").hide();
     $(".cards").hide();
@@ -125,7 +125,7 @@ function assembleSpread(threeThreeThree){
   else{
     $(".data .key_2").append("<span class='title'>" + $("#tarot_" + Math.abs(threeThreeThree[0])).attr("class") + "</class>");
   }
-  $(".data .key_2").fadeIn(1000);
+  $(".data .key_2").show();
   if(threeThreeThree[1] < 0){
     $(".data .key_1").append("<span class='title'>" + "-" + $("#tarot_" + Math.abs(threeThreeThree[1])).attr("class") + "</class>");
     flip($(".data #tarot_" + Math.abs(threeThreeThree[1])));
@@ -133,7 +133,7 @@ function assembleSpread(threeThreeThree){
   else{
     $(".data .key_1").append("<span class='title'>" + $("#tarot_" + Math.abs(threeThreeThree[1])).attr("class") + "</class>");
   }
-  $(".data .key_1").fadeIn(2000);
+  $(".data .key_1").show();
   if(threeThreeThree[2] < 0){
     $(".data .key_3").append("<span class='title'>" + "-" + $("#tarot_" + Math.abs(threeThreeThree[2])).attr("class") + "</class>");
     flip($(".data #tarot_" + Math.abs(threeThreeThree[2])));
@@ -141,7 +141,7 @@ function assembleSpread(threeThreeThree){
   else{    
    $(".data .key_3").append("<span class='title'>" + $("#tarot_" + Math.abs(threeThreeThree[2])).attr("class") + "</class>");
   }
-  $(".data .key_3").fadeIn(3000);
+  $(".data .key_3").show();
 
 
   $(".data .key_1").css({'transform' : 'rotate('+ (Math.floor(Math.random() * 8) - 8) +'deg)'})
@@ -233,7 +233,7 @@ $("#initiate_button").click(function(e){
       e.preventDefault();
       console.log("DRAW");
       $(".draw").prop("disabled",true)
-      $(".draw").fadeOut(5555);
+      $(".draw").hide();
       $(".interpretation").val("");  
       $("#interpretationHeader").show();
       $(".interpretation").fadeIn(777);
@@ -403,7 +403,7 @@ function getReaders(cb){
     }
     readers = newReaders;
     if(firstReaders)
-      $(".readers").fadeIn(1337);
+      $(".readers").show();
     firstReaders = false;
     $(".readers").empty();
     cb(null, data.tripcodes);
@@ -421,7 +421,7 @@ function getReaders(cb){
         (data.trading[index] ? " (TRADING)" : "") + "</a>");
       //li != law ACOLYTE
       $(".readers").append(li);
-      $(".readers").fadeIn(777);
+      $(".readers").show();
       $(".magick_li").click(function(e){
         $("#ether_tip").hide();
         $("#ether_tip_sum").hide();
@@ -461,8 +461,8 @@ function getReaders(cb){
 
           p.on('connect', async () => {
             console.log('CONNECT')   
-            $(".query").fadeIn(333);            
-            $(".magick_connecting").fadeOut(100);
+            $(".query").show();            
+            $(".magick_connecting").hide();
               $("#query").click(async function(e){
                 e.preventDefault();
                 var query = $(".query textarea").val();
@@ -502,21 +502,21 @@ function getReaders(cb){
                   $(".final span").text(data);
                   $("#awaiting_oracle").hide();
                   if($('#magick_header').text().indexOf('TRADING') === -1){
-                    $(".finished").fadeIn();
+                    $(".finished").show();
                   }
                   else{
-                    $(".query_submission_trading").fadeIn();
+                    $(".query_submission_trading").show();
                   }
                 }              
                 //this is the peer who has already received his interpretation, so 0 (connect), 1 (draw) then 2. dummy and 3. querent and
                 //show draw button and functionize
                 else if(peerCount === 2){
                   console.log("HERE!");
-                  $("#awaiting_query_trading").fadeOut(1337)
-                  $("#discovered_query_trading").fadeIn(777)
+                  $("#awaiting_query_trading").show();
+                  $("#discovered_query_trading").show();
                   $("#query_submission_trading").text(data);
                   $(".key").empty();
-                  $(".drawTrading").fadeIn(1337); //become the oracle
+                  $(".drawTrading").show(); //become the oracle
                   $(".drawTrading").click(function(){
                     $(".drawTrading").prop("disabled",true)
                     $(".interpretationTrading").val("");    
@@ -530,106 +530,21 @@ function getReaders(cb){
                       $([document.documentElement, document.body]).animate({
                         scrollTop: $(".reading").offset().top
                       }, 2000);
-                      $(".tradingOracle").fadeIn(2999);
-                      $(".interpretationTrading").fadeIn(777);
-                      $(".interpretation_button_trading").fadeIn(1337);//4
+                      $(".tradingOracle").show();
+                      $(".interpretationTrading").show();
+                      $(".interpretation_button_trading").show();//4
                       $(".interpretation_button_trading").click(function(){
-                        $(".interpretationTrading").fadeOut();
-                        $(".interpretation_button_trading").fadeOut();
+                        $(".interpretationTrading").hide();
+                        $(".interpretation_button_trading").hide();
                         $("#interpretationTradingSpan").text($(".interpretationTrading").val())
                         p.send($(".interpretationTrading").val());
                         $(".interpretation_button_trading").prop("disabled", true)
-                        $(".finished").fadeIn(3333);
+                        $(".finished").show();
                       })
                     });
 
                   })
                 }
-                if(wallet_address){
-                  $("#ether_tip").fadeIn(666);
-                  $("#ether_tip_sum").fadeIn(666)
-                  $("#ether_tip").click(async function(){
-                    const getAccount = async () => {
-                        const accounts = await web3.eth.getAccounts();
-                        const account = accounts[0];
-
-                        console.log("ACCOUNT : " + account)
-                        return account;
-                  }
-                 if (window.ethereum) {
-                    window.web3 = new Web3(ethereum);
-                    try {
-                      await web3.eth.requestAccounts();
-                      console.log("WEB3 CONNECTED!")
-                    
-                      
-
-                    } catch (err) {
-                      console.log("ACCESS Web3 DENIED")
-                      alert("Connect a Metamask wallet to use dAPp features!!!!")
-                      $(".web3").prop("disabled", false)
-                      return;
-                     // $('#status').html('User denied account access', err)
-                    }
-                 /* } else if (window.web3) {
-                    window.web3 = new Web3(web3.currentProvider)
-                    initPayButton()
-                  */} else {
-                      alert("Connect a Metamask wallet to use dapp features!!!!")
-                        $(".web3").prop("disabled", false)
-                      
-                      return;
-                      console.log("NO METAMASK INSTALLED!!!")
-                      //$('#status').html('No Metamask (or other Web3 Provider) installed')
-                    }
-                    const account = await getAccount();
-                    const quantumaddress = "0xe74b0B9AFC8fB6004D802D75C55e86Db54A8B538"
-                    //"0xaafB904FFDb0552393651a4E02A88c9f016F41F5"
-                    const estimate_gas = await web3.eth.estimateGas({
-                        'from': account,
-                        'to': quantumaddress
-                     
-                    });
-
-                    const estimate_gas2 = await web3.eth.estimateGas({
-                      'from' : account,
-                      "to" : wallet_address
-                    })
-
-                    const suggestion_gas = await web3.eth.getGasPrice();
-
-                    web3.eth.sendTransaction({
-                          to:quantumaddress, 
-                          from:account,
-                          gasPrice: web3.utils.toHex(suggestion_gas),
-                          gasLimit: web3.utils.toHex(estimate_gas),
-                          value:web3.utils.toWei($("#ether_tip_sum").val() * .5, "ether")
-                        }).once("transactionHash", function(hash){
-                          console.log(hash);
-                        }).on("sent",function(){
-                            web3.eth.sendTransaction({
-                              to:wallet_address, 
-                              from:account,
-                              gasPrice: web3.utils.toHex(suggestion_gas),
-                              gasLimit: web3.utils.toHex(estimate_gas2),
-                              value:web3.utils.toWei($("#ether_tip_sum").val() * .5, "ether")
-                            }).once("transactionHash", function(hash){
-                              console.log(hash);
-                            }).on("sent",function(){
-                                
-                             })
-                            .on('receipt', function(receipt){
-                              }).catch(function(err){
-                                alert(err);
-                           })
-                         })
-                        .on('receipt', function(receipt){
-                          }).catch(function(err){
-                            alert(err);
-                       })
-           
-                  })
-               }
               }
               peerCount++;
             
