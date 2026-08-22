@@ -356,7 +356,7 @@ function getReaders(cb){
     $(".readers").empty();
     cb(null, data.tripcodes);
     if(!data.tripcodes || !data.tripcodes[0]){
-      $("#oracles_header").html("No Oracles. Why not <a href='#oracle' class'ANCHOR oracle'>host</a> one?");
+      $("#oracles_header").html("No Oracles. Why not <a href='#oracle' class='ANCHOR oracle'>host</a> one?");
       ANCHOR.buffer();
       return;
     }
