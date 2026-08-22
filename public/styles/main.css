@@ -254,14 +254,17 @@ h1 a, h1 a:visited{
 input{
 	height:55px;
 	font-family:"VT323", serif;
+	font-size:20px;
 }
 
 input::placeholder{
 	font-family:"VT323", serif;
+	font-size:20px;
 }
 
 textarea{
 	font-family:"VT323", serif;
+	font-size:20px;
 }
 
 
