@@ -1,5 +1,3 @@
-//maybe sell this software
-
 $(document).ready(function(){
 
     // Clean up when the tab or window is closed / hidden
@@ -337,125 +335,116 @@ function arraysEqual(a, b) {
   return true;
 }
 
-
-var readers = []
+var readers = [];
 var firstReaders = true;
+
 function getReaders(cb){
   $.get("/readers", function(data){
     var newReaders = data.tripcodes;
+    
     if(readers.length > 0 && arraysEqual(readers, newReaders)){
       return;
     }
+    
     $("#oracles_info").html("");
-    readers = newReaders;
-    if(firstReaders)
-      $(".readers").show();
-    firstReaders = false;
-    $(".readers").empty();
-    cb(null, data.tripcodes);
+    readers = newReaders || [];
+    
+    // Check for empty/missing tripcodes FIRST
     if(!data.tripcodes || !data.tripcodes[0]){
+      $(".readers").empty().hide(); // Clear and hide list if no peers
       $("#oracle_info").html("No Oracles. Why not <a href='#oracle' class='ANCHOR oracle'>host</a> one?");
+      if(cb) cb(null, []);
       ANCHOR.buffer();
       return;
     }
     
+    // Valid tripcodes found: safe to clear and render
+    if(firstReaders) $(".readers").show();
+    firstReaders = false;
+    $(".readers").empty();
+    
     $("#oracle_info").html("");
-    data.tripcodes.forEach(function(tripcode, index){
-
+    
+    data.tripcodes.forEach(function(tripcode){
       var li = document.createElement("li");
-      var tripcode = tripcode;
       $(li).append("<a class='magick_li' href='#magick?tripcode=" + encodeURIComponent(tripcode) + "'>" + tripcode + "</a>");
-      //li != law ACOLYTE
       $(".readers").append(li);
-      $(".readers").show();
-      $(".magick_li").click(function(e){
-        e.preventDefault();
-        //retrieve sequence
-        ANCHOR.route($(this).attr("href"));
-        var tripcode = ANCHOR.getParams().tripcode;
-        $("#trip_console").text(tripcode);
-        $(".magick_connecting").show();
-        $("#oracles").hide();
-        tripcode = encodeURIComponent(tripcode);
-        $.get("/sequence/" + tripcode, function(data){
-          if(data.sequence){
-            $("#not_found_header").hide();
-          }
-          //send signal
-          p = new SimplePeer({
-            initiator : false,
-            //config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:global.stun.twilio.com:3478?transport=udp' }] },
-            trickle : false,
-            reconnectTimer: 100,
-            iceTransportPolicy: 'relay',
-          }) 
+    });
+    
+    $(".readers").show();
+    
+    // Re-bind click handlers for newly generated links
+    $(".magick_li").click(function(e){
+      e.preventDefault();
+      ANCHOR.route($(this).attr("href"));
+      var tripcode = ANCHOR.getParams().tripcode;
+      $("#trip_console").text(tripcode);
+      $(".magick_connecting").show();
+      $("#oracles").hide();
+      tripcode = encodeURIComponent(tripcode);
+      
+      $.get("/sequence/" + tripcode, function(data){
+        if(data.sequence){
+          $("#not_found_header").hide();
+        }
         
+        p = new SimplePeer({
+          initiator : false,
+          trickle : false,
+          reconnectTimer: 100,
+          iceTransportPolicy: 'relay',
+        }); 
 
+        p.signal(JSON.parse(data.sequence));
 
-          p.signal(JSON.parse(data.sequence));
+        p.on('signal', data => {
+          console.log("MAGICK SIGNAL SENT");
+          $.post("/magick", {sequence : JSON.stringify(data), tripcode : encodeURIComponent(tripcode)});
+        });
 
-          var sequence = data.sequence;
-          p.on('signal', data=>{
-            console.log("MAGICK SIGNAL SENT");
-            $.post("/magick", {sequence : JSON.stringify(data), tripcode : encodeURIComponent(tripcode)}, function(data){
-              
-            })
-          })
+        p.on('connect', async () => {
+          $(".query").show();            
+          $(".magick_connecting").hide();
+          $("#query").click(async function(e){
+            e.preventDefault();
+            var query = $(".query textarea").val();
+            p.send(query);
+            $(".query textarea").hide();
+            $(".query button").hide();
+            $("#query_submitted").show();
+            $(".reading_h3").show();
+            $("#query_submitted").text(query);
+          });         
+        });
 
-          p.on('connect', async () => {
-            $(".query").show();            
-            $(".magick_connecting").hide();
-              $("#query").click(async function(e){
-                e.preventDefault();
-                var query = $(".query textarea").val();
-                p.send(query);
-                $(".query textarea").hide();
-                $(".query button").hide();
-                $("#query_submitted").show();
-                $(".reading_h3").show();
-                $("#query_submitted").text(query);
-              })         
-          })
-          //this is the peer receiving the spread
-          p.on('data', async data => {
-              
-              var arr; 
-              try{
-                //data is an array
-                arr = JSON.parse(data);
-                if(ANCHOR.page() === "magick"){
-                  assembleSpread(arr);
-                  $([document.documentElement, document.body]).animate({
-                    scrollTop: $(".reading").offset().top
-                  }, 2000);
-                }
-              }
-              catch(e){
-                //data is an oracle
-                $("#querent_oracle").show();
-                $(".final span").text(data);
-                $("#awaiting_oracle").hide();
-                $(".finished").fadeIn(1337);
-                
-                
-              }
-            
-          })
+        p.on('data', async data => {
+          var arr; 
+          try {
+            arr = JSON.parse(data);
+            if(ANCHOR.page() === "magick"){
+              assembleSpread(arr);
+              $([document.documentElement, document.body]).animate({
+                scrollTop: $(".reading").offset().top
+              }, 2000);
+            }
+          } catch(e) {
+            $("#querent_oracle").show();
+            $(".final span").text(data);
+            $("#awaiting_oracle").hide();
+            $(".finished").fadeIn(1337);
+          }
+        });
 
+        p.on('close', () => {
+          $("#magick_header").text($(".magick h2").text()); 
+        });
 
-          p.on('close', () => {
-            //reset(true);  
-            $("#magick_header").text($(".magick h2").text()); 
-          })
+        p.on('error', err => console.log('error', err));
+      });
+    });
 
-          p.on('error', err => console.log('error', err))
-
-
-
-        })
-      })
-    })
-  })
+    if(cb) cb(null, data.tripcodes);
+  });
 }
 
 $("#soloReading").click(function(){
