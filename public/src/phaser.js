@@ -1,6 +1,20 @@
 //maybe sell this software
 
 $(document).ready(function(){
+
+    // Clean up when the tab or window is closed / hidden
+  function cleanupSession() {
+    const tripcode = $("#tripcode").val();
+    if (tripcode) {
+      // sendBeacon sends an async POST payload that survives tab closure
+      const url = "/delete_oracle/" + encodeURIComponent(tripcode);
+      navigator.sendBeacon(url);
+    }
+  }
+
+  // Trigger on tab close, navigation, or visibility change
+  window.addEventListener("pagehide", cleanupSession);
+  window.addEventListener("beforeunload", cleanupSession);
   var count = 0;
   var peerCount = 0;
   
@@ -170,10 +184,6 @@ var connected;
 
 $("#initiate_button").click(function(e){
 
-  window.addEventListener("beforeunload", (event) => {
-
-    navigator.sendBeacon("/delete_oracle/" + encodeURIComponent($("#tripcode").val()));
-  });
   k(10,233,100);
 
   if(!$("#tripcode").val()){
@@ -333,6 +343,10 @@ $("#initiate_button").click(function(e){
   })
 
   p.on('close', () => {
+    const tripcode = $("#tripcode").val();
+    if (tripcode) {
+      $.post("/delete_oracle/" + encodeURIComponent(tripcode));
+    }
     reset();
   })
 
