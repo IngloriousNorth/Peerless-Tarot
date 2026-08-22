@@ -346,6 +346,11 @@ h3{
 	padding: 7px;
 }
 
+a, a:visited{
+	color:cyan;
+	font-family:"Playfair Display", serif;
+}
+
 .finished{
 
 	color:dimgray;
