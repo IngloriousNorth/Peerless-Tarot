@@ -281,45 +281,11 @@ $("#initiate_button").click(function(e){
     }
   })
   p.on('data', data => {
-    console.log("COUNT: " + count);
     console.log(data)
-    if("" + data !== "true666" && "" + data !== "false666"){
-      if(count === 1){ //this is the peer's querent for the ORACLE
-        $(".query_submission").fadeIn(1337);
-        $("#awaiting_query").fadeOut(777);
-        $("#discovered_query").fadeIn();
-        $("#query_submission").text(data);
-
-      }
-      else if(count === 2){
-        //this is the oracle's draw he receives thru the peer AS new oracle
-        var arr = JSON.parse(data);
-        assembleSpread(arr);
-        $([document.documentElement, document.body]).animate({
-          scrollTop: $(".reading").offset().top
-        }, 2000);
-
-      }
-      else if(count === 3){
-        //this is the oracle's reception of peer's (new oracle) interpretation 
-        $("#finalTradingSpan").text(data);
-        $("#awaiting_oracle_trading").hide();
-        $(".finalTrading").fadeIn(1337);
-        $(".finished").fadeIn(3333)
-
-      }
-    }
-    else if("" + data === "true666"){
-      $(".draw").prop("disabled", false)
-      $("#awaiting_eth").text("Payment of " + (parseFloat($("#sum").val()) * .25) + " ETH received!!!!!")
-      $("#awaiting_query").fadeIn();
-    }
-    else{
-      $("#awaiting_eth").text("Payment failure. Please disconnect.")
-      $("#disconnect_button").show();
-    }
-    count++;
-    
+    $(".query_submission").fadeIn(1337);
+    $("#awaiting_query").fadeOut(777);
+    $("#discovered_query").fadeIn();
+    $("#query_submission").text(data);    
   })
 
   $("#disconnect_button").click(function(){
