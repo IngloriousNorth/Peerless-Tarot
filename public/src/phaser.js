@@ -354,6 +354,7 @@ function getReaders(cb){
     if(readers.length > 0 && arraysEqual(readers, newReaders)){
       return;
     }
+    $("#oracles_info").html("");
     readers = newReaders;
     if(firstReaders)
       $(".readers").show();
