@@ -102,6 +102,7 @@ header{
 #querent_oracle, #oracle_querent{
 	width:100%;
 	display:block;
+	clear:both;
 }
 
 input{
@@ -280,7 +281,7 @@ textarea{
 	width:100%;
 	display:block;
 	color:#50C777;
-
+	font-family:"VT323", serif;
 }
 
 .key span{
@@ -386,6 +387,7 @@ h3{
 #oracle_heading{
 	display:block;
 	width:100%;
+	clear:both;
 }
 
 h3{
@@ -406,6 +408,7 @@ h3{
 	width:100%;
 	display:block;
 	color:#50C777;
+	clear:both;
 }
 
 label {
