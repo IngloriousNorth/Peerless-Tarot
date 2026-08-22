@@ -143,6 +143,7 @@ h2{
 .readers li a, .readers li a:visited{
 	color:#50C777;
 	font-family:"Playfair Display", serif;
+	font-size:16px;
 }
 
 .menu li a{
