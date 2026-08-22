@@ -368,6 +368,9 @@ function getReaders(cb){
       ANCHOR.buffer();
       return;
     }
+    else{
+      $("#oracle_info").html("");
+    }
     $("#oracles_header").text("Browse")
     data.tripcodes.forEach(function(tripcode, index){
 

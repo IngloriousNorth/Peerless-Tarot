@@ -177,6 +177,9 @@ h2{
 }
 
 textarea{
+	margin-left:5px;
+	margin-right:5px;
+	box-sizing:border-box;
 	width:100%;
 }
 
@@ -371,8 +374,18 @@ h3{
 	padding: 7px;
 }
 
-h2 a, h2 a:visited{
+#oracle_info a, #oracle_info a:visited{
 	color:cyan;
+}
+
+#oracle_heading{
+	display:block;
+	width:100%;
+}
+
+h3{
+	display:block;
+	width:100%;
 }
 
 .finished{
