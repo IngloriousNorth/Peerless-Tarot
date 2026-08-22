@@ -41,7 +41,7 @@ $(document).ready(function(){
     }
     count = 0;
     peerCount = 0;
-    $("#interpretationHeader").hide();
+    $("#spreadHeader").hide();
     $("#oracle_interpretation").text("").hide();
     $("#awaiting_oracle").show();
    
@@ -49,6 +49,7 @@ $(document).ready(function(){
     $(".finished").hide();
     $(".reading_h3").hide();
     $("#disconnect_button").hide();
+    $("#oracle_heading").hide();
     $("#initiate_button").prop("disabled", false);
     $(".draw").prop("disabled",false);
     $("#query_submission").text("");
@@ -206,7 +207,7 @@ $("#initiate_button").click(function(e){
       $(".draw").prop("disabled",true)
       $(".draw").hide();
       $(".interpretation").val("");  
-      $("#interpretationHeader").show();
+      $("#spreadHeader").show();
       $(".interpretation").fadeIn(777);
       $(".interpretation_button").fadeIn(777) 
 
@@ -218,6 +219,7 @@ $("#initiate_button").click(function(e){
         assembleSpread(threeThreeThree);
         arrDigits = []
         p.send(JSON.stringify(threeThreeThree));
+        $("#oracle_heading").show();
         $([document.documentElement, document.body]).animate({
           scrollTop: $(".reading").offset().top
         }, 2000);
