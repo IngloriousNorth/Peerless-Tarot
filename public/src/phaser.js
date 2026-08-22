@@ -27,7 +27,8 @@ $(document).ready(function(){
       $(".key").empty();      
       $(".final").hide();      
       
-      $("#magick_header").text("Oracle not found!")
+      $("#magick_header").text("Browse")
+      $("#oracle_info").text("Oracle not found.")
     }
 
     if(r){
@@ -264,8 +265,8 @@ $("#initiate_button").click(function(e){
       $("#initiate_button").hide();
       $("#disconnect_button").show();
       $("#disconnect_button").prop("disabled", false)
-      $(".oracle h2").text(data.tripcode);
-      
+      $(".oracle h2").text("Host");
+      $("#oracle_console").text(data.tripcode);
       var interval = setInterval(function(){
         $.get("/hail/" + encodeURIComponent(tripcode), function(data){
           if(data){            
