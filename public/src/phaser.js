@@ -27,7 +27,7 @@ $(document).ready(function(){
       $(".key").empty();      
       $(".final").hide();      
       
-      $("#magick_header").text("Browse")
+      $("#magick_header").text("Peer")
       $("#oracle_info").html("")
     }
 
@@ -35,7 +35,7 @@ $(document).ready(function(){
       clearTimeout(r);
     }
 
-    $("#oracles_header").text("Browse")
+    $("#oracles_header").text("Peer")
     $("#oracle_info").html("")
     if(ANCHOR.page() === "oracle"){
       $.post("/delete_oracle/" + $("#tripcode").val());
@@ -102,7 +102,6 @@ ANCHOR.load();
 
 function assembleSpread(threeThreeThree){
   $(".data").show();
-  console.log(threeThreeThree);
   $("#tarot_" + Math.abs(parseInt(threeThreeThree[0]))).clone().appendTo($(".data .key_2"));
   $("#tarot_" + Math.abs(parseInt(threeThreeThree[1]))).clone().appendTo($(".data .key_1"));
   $("#tarot_" + Math.abs(parseInt(threeThreeThree[2]))).clone().appendTo($(".data .key_3"));
@@ -237,7 +236,6 @@ $("#initiate_button").click(function(e){
     
   })
   p.on('data', data => {
-    console.log(data)
     $(".query_submission").fadeIn(1337);
     $("#awaiting_query").fadeOut(777);
     $("#discovered_query").fadeIn();
@@ -249,7 +247,6 @@ $("#initiate_button").click(function(e){
   })
 
   p.on('signal', data => {
-  console.log(data)
   //document.querySelector('#outgoing').textContent = JSON.stringify(data)
    //list #uuid
    $.post("/initiate", {sequence : JSON.stringify(data), trips : encodeURIComponent(tripcode)}, function(data){
@@ -260,7 +257,7 @@ $("#initiate_button").click(function(e){
       $("#initiate_button").hide();
       $("#disconnect_button").show();
       $("#disconnect_button").prop("disabled", false)
-      $(".oracle h2").text("Host");
+      $(".oracle h2").text("Oracle");
       $("#oracle_console").text(data.tripcode);
       var interval = setInterval(function(){
         $.get("/hail/" + encodeURIComponent(tripcode), function(data){
@@ -357,7 +354,7 @@ function getReaders(cb){
     $(".readers").empty();
     cb(null, data.tripcodes);
     if(!data.tripcodes || !data.tripcodes[0]){
-      $("#oracles_header").text("Browse");
+      $("#oracles_header").text("Peer");
       $("#oracle_info").html("No Oracles. Why not <a href='#oracle' class='ANCHOR oracle'>host</a> one?");
       ANCHOR.buffer();
       return;
@@ -365,12 +362,11 @@ function getReaders(cb){
     else{
       $("#oracle_info").html("");
     }
-    $("#oracles_header").text("Browse")
+    $("#oracles_header").text("Peer")
     data.tripcodes.forEach(function(tripcode, index){
 
       var li = document.createElement("li");
       var tripcode = tripcode;
-      console.log(data);
       $(li).append("<a class='magick_li' href='#magick?tripcode=" + encodeURIComponent(tripcode) + "'>" + tripcode + "</a>");
       //li != law ACOLYTE
       $(".readers").append(li);
@@ -405,13 +401,11 @@ function getReaders(cb){
           p.on('signal', data=>{
             console.log("MAGICK SIGNAL SENT");
             $.post("/magick", {sequence : JSON.stringify(data), tripcode : encodeURIComponent(tripcode)}, function(data){
-              console.log("MAGICK SIGNAL SUCCESS");
               
             })
           })
 
           p.on('connect', async () => {
-            console.log('CONNECT')   
             $(".query").show();            
             $(".magick_connecting").hide();
               $("#query").click(async function(e){
