@@ -18,7 +18,6 @@ function threeThreeThreeSpread(cb){
 			else{
 				arrDigits.push(data);
 			}
-			console.log(arrDigits);
 			getData(arrDigits, function(err, data){				
 					var upsidedown = Math.floor(Math.random() * 2);
 				
@@ -32,7 +31,6 @@ function threeThreeThreeSpread(cb){
 					else{*/
 						arrDigits.push(data);
 					//}
-				    console.log(arrDigits);
 	
 					getData(arrDigits, function(err, data){						
 							var upsidedown = Math.floor(Math.random() * 2);
@@ -46,7 +44,6 @@ function threeThreeThreeSpread(cb){
 							else{*/
 							arrDigits.push(data);
 							//}
-						    console.log(arrDigits);
 							cb(null, arrDigits);							
 					});	
 			});
@@ -59,7 +56,6 @@ function getData(arrDigits, cb) {
 
   $.get(proxyUrl)
     .done(function(data) {
-      console.log("draw");
       if (data && typeof data.number === "number") {
         // Map 0-255 down to 0-76 (77 cards total)
         var cardIndex = data.number % 77;
@@ -73,6 +69,7 @@ function getData(arrDigits, cb) {
           getData(arrDigits, cb);
         }
       } else {
+      	console.log("Pseudo-random fallback");
         fallbackRandom(arrDigits, cb);
       }
     })

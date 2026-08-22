@@ -28,7 +28,7 @@ $(document).ready(function(){
       $(".final").hide();      
       
       $("#magick_header").text("Browse")
-      $("#oracle_info").text("Oracle not found.")
+      $("#oracle_info").html("")
     }
 
     if(r){
@@ -36,7 +36,7 @@ $(document).ready(function(){
     }
 
     $("#oracles_header").text("Browse")
-    $("#oracles_info").html("")
+    $("#oracle_info").html("")
     if(ANCHOR.page() === "oracle"){
       $.post("/delete_oracle/" + $("#tripcode").val());
 
@@ -101,14 +101,12 @@ if(!ANCHOR.page()){
 ANCHOR.load();
 
 function assembleSpread(threeThreeThree){
-  console.log("HERE");
   $(".data").show();
   console.log(threeThreeThree);
   $("#tarot_" + Math.abs(parseInt(threeThreeThree[0]))).clone().appendTo($(".data .key_2"));
   $("#tarot_" + Math.abs(parseInt(threeThreeThree[1]))).clone().appendTo($(".data .key_1"));
   $("#tarot_" + Math.abs(parseInt(threeThreeThree[2]))).clone().appendTo($(".data .key_3"));
 
-  console.log(Math.abs(threeThreeThree[0]) + " " + Math.abs(threeThreeThree[1]) + " " + Math.abs(threeThreeThree[2]))
 
   if(threeThreeThree[0] < 0){
    $(".data .key_2").append("<span class='title'>" + "-" + $("#tarot_" + Math.abs(threeThreeThree[0])).attr("class") + "</class>");
@@ -196,7 +194,6 @@ $("#initiate_button").click(function(e){
     clearTimeout(r)
 
     connected = true;
-    console.log('CONNECT')
     beep();
     $("#awaiting").hide();
     $("#connected").show();
@@ -208,7 +205,6 @@ $("#initiate_button").click(function(e){
     $(".draw").prop("disabled", false)
     $(".draw").on("click", function(e){
       e.preventDefault();
-      console.log("DRAW");
       $(".draw").prop("disabled",true)
       $(".draw").hide();
       $(".interpretation").val("");  
@@ -217,8 +213,6 @@ $("#initiate_button").click(function(e){
 
       //for some reason this gets called twice?
       threeThreeThreeSpread(function(err, result){
-        console.log("1TIMER");
-        console.log(result);
         var threeThreeThree = result;
         assembleSpread(threeThreeThree);
         arrDigits = []
@@ -427,20 +421,18 @@ function getReaders(cb){
                 $(".query textarea").hide();
                 $(".query button").hide();
                 $("#query_submitted").show();
+                $(".reading_h3").show();
                 $("#query_submitted").text(query);
               })         
           })
           //this is the peer receiving the spread
           p.on('data', async data => {
               
-              console.log('data: ' + data)
               var arr; 
               try{
-                console.log("CALLED ASSEMBLE SPREAD");
                 //data is an array
                 arr = JSON.parse(data);
                 if(ANCHOR.page() === "magick"){
-                  console.log(arr);
                   assembleSpread(arr);
                   $([document.documentElement, document.body]).animate({
                     scrollTop: $(".reading").offset().top
