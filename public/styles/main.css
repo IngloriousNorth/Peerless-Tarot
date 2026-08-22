@@ -86,8 +86,8 @@ button{
 
 header{
 	background-color:darkcyan;
-	box-shadow:4px 4px 4px dimgray;
-	border-bottom:2px solid darkgray;
+	box-shadow:3px 3px 4px #50C777;
+	border-bottom:2px solid dimgray;
 	position:fixed;
 	top:0px;
 	left:0px;
