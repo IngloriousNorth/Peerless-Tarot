@@ -42,6 +42,7 @@ $(document).ready(function(){
     }
     count = 0;
     peerCount = 0;
+    $("#querent_oracle").hide();
     $("#spreadHeader").hide();
     $("#oracle_interpretation").text("").hide();
     $("#awaiting_oracle").show();
@@ -139,7 +140,6 @@ function assembleSpread(threeThreeThree){
   $(".reading_h3").fadeIn();
   
   
-
   $(".final").show();
 }
 
@@ -447,6 +447,7 @@ function getReaders(cb){
               }
               catch(e){
                 //data is an oracle
+                $("#querent_oracle").show();
                 $(".final span").text(data);
                 $("#awaiting_oracle").hide();
                 $(".finished").fadeIn(1337);
