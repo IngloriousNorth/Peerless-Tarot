@@ -81,8 +81,8 @@ button{
 
 header{
 	background-color:darkcyan;
-	box-shadow:4px 4px 4px mediumvioletred;
-	border-bottom:2px solid dimgray;
+	box-shadow:4px 4px 4px dimgray;
+	border-bottom:2px solid darkgray;
 	position:fixed;
 	top:0px;
 	left:0px;
@@ -170,7 +170,7 @@ h1{
 h1 a{
 	font-size: 36px;
 	font-family: 'Elsie', sans-serif;
-	color: cyan;
+	color: white;
 }
 
 .reading{
@@ -256,7 +256,7 @@ label{
 	width:100px;
 	display:block;
 	height:auto;
-	color:dimgray;
+	color:dimgray !important;
 	font-family:"Playfair Display", serif;
 }
 
