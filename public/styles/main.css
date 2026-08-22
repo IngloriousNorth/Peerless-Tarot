@@ -225,7 +225,7 @@ h1 a{
 .key{
 	font-family: monospace;
     white-space: pre;
-    color:#50C777;
+    color:dimgray;
 }
 
 .ANCHOR_partial span:not(.finalSpan){
@@ -267,7 +267,7 @@ textarea{
 	width:100px;
 	display:block;
 	height:auto;
-	color:dimgray !important;
+	color:#50C777 !important;
 	font-family:"Playfair Display", serif;
 }
 
