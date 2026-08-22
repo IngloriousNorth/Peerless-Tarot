@@ -26,10 +26,10 @@
     </header>
     <div class="main">
       <div class="home ANCHOR_partial">
-        <h2>Quantum ASCII P2P Tarot Readings</h2>
+        <h2>Quantum ASCII Tarot Readings</h2>
         <br>
         <span>Readers: Click Oracle and wait for a Peer to connect; wait for Querent (optional); click Draw. Finalize your Oracle with an interpretation of the Quantum Spread.</span><br><br>
-        <span>Querents: Click Browse to connect to an Oracle Reader; submit a Querent (your question is optional); wait for your Oracle to Draw. After the Quantum Spread, await & read Oracle's interpretation, all peer-to-peer!</span><br><br><br>
+        <span>Querents: Click Peer to connect to an Oracle Reader; submit a Querent (your question is optional); wait for your Oracle to Draw. After the Quantum Spread, await & read Oracle's interpretation, all peer-to-peer using SimplePeer!</span><br><br><br>
 
       </div>
       <div class="solo ANCHOR_partial">
@@ -68,7 +68,7 @@
         <span class="magick_connecting" class="hidden">Connecting...</span>&nbsp;<br><br>
         <div class="query" class="hidden">     
           <h3>Querent</h3>
-          <textarea id="querent_textarea" placeholder="Ask away (Optional)"></textarea><br><button id="query">Query</button>
+          <textarea id="querent_textarea" placeholder="Ask away (Optional)"></textarea><br><button id="query">Send</button>
           <span id="query_submitted"></span><br><br>
         </div>
         <br>
@@ -112,12 +112,11 @@
         </form>
         <br>
         <div class="connection hidden">
-          <span id="awaiting">Initiate to Find Peers!</span>
           <span id="oracle_console"></span>
+          <span id="awaiting">Initiate to Find Peers!</span>
           <span id="connected">Peer Connected</span>
         </div>
         <br>
-        <span id="awaiting_eth" class="hidden"></span>
         <br>
         <div class="query_submission">
           <h3 id="oracle_querent">Querent</h3>

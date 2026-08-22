@@ -35,7 +35,6 @@ $(document).ready(function(){
       clearTimeout(r);
     }
 
-    $("#oracles_header").text("Peer")
     $("#oracle_info").html("")
     if(ANCHOR.page() === "oracle"){
       $.post("/delete_oracle/" + $("#tripcode").val());
@@ -354,15 +353,12 @@ function getReaders(cb){
     $(".readers").empty();
     cb(null, data.tripcodes);
     if(!data.tripcodes || !data.tripcodes[0]){
-      $("#oracles_header").text("Peer");
       $("#oracle_info").html("No Oracles. Why not <a href='#oracle' class='ANCHOR oracle'>host</a> one?");
       ANCHOR.buffer();
       return;
     }
-    else{
-      $("#oracle_info").html("");
-    }
-    $("#oracles_header").text("Peer")
+    
+    $("#oracle_info").html("");
     data.tripcodes.forEach(function(tripcode, index){
 
       var li = document.createElement("li");
