@@ -41,43 +41,16 @@ $(document).ready(function(){
     }
     count = 0;
     peerCount = 0;
-    $("#finalTradingSpan").text("");
     $("#interpretationHeader").hide();
-    $("#querent_textarea_trading").show();
-    $("#query_submitted_trading").text("");
     $("#oracle_interpretation").text("").hide();
-    $("#interpretationTradingSpan").text("");
-    $(".tradingOracle").hide();
     $("#awaiting_oracle").show();
-    $("#awaiting_oracle_trading").show();
    
     $("#tripcode").show();
-    $("#query_textarea_trading").hide();
-    $(".interpretationTrading").show();
-    $(".interpretation_trading_button").show();
-    $("#wallet_address").show();
-    $(".trading").show();
     $(".finished").hide();
     $(".reading_h3").hide();
-    $("#trading").prop("disabled", false)
-    $("#drawTrading").prop("disabled", false)
-    $("#queryTrading").prop("disabled", false)
-    $("#wallet_address").prop("disabled", false)    
     $("#disconnect_button").hide();
     $("#initiate_button").prop("disabled", false);
-    $(".finalTrading span").text("")
     $(".draw").prop("disabled",false);
-    $("#awaiting_querent_trading").show();
-    $("#discovered_query_trading").hide();
-    $(".interpretation_button_trading").prop("disabled", false)
-    $("#query_submission_trading").text("");
-    $(".query_submission_trading").hide();
-    $(".queryTrading").hide();
-    $(".finalTrading").hide();
-    $(".interpretationTrading").hide();
-    $(".interpretation_button_trading").hide();
-    $(".drawTrading").hide()
-    $("#query_submitted_trading").text("");
     $("#query_submission").text("");
     $(".interpretation_button").prop("disabled", false)
     $("#initiate_button").show();
@@ -93,7 +66,6 @@ $(document).ready(function(){
     $("#query_submission").text("");
     $("#awaiting_query").hide();
     $("#discovered_query").hide();
-    $("#awaiting_eth").hide();
     //$(".connection").hide();
     //$("#awaiting").hide();
     $("#awaiting").text("Initiate to find Peers!")
@@ -191,22 +163,14 @@ $("#initiate_button").click(function(e){
     return false;
   }
 
-  var sum = $("#sum").val();
-  if(!sum){
-    sum = 0;
-  }
-
   if(r){
     clearTimeout(r);
   }
   e.preventDefault();
   $(".key").empty();
   $("#initiate_button").prop("disabled", true);
-  $("#trading").prop("disabled", true);
 
   $("#tripcode").hide();
-  $("#wallet_address").hide();
-  $(".trading").hide();
 
   p = new SimplePeer({ 
     initiator: true,
@@ -224,10 +188,6 @@ $("#initiate_button").click(function(e){
   
 
   var tripcode = $("#tripcode").val();
-  var wallet_address = $("#wallet_address").val();
-  var trading = $("#trading").is(":checked");
-  var sum = $("#sum").val();
-  console.log(sum);
   p.on('connect', () => {
     clearTimeout(r)
 
@@ -272,24 +232,9 @@ $("#initiate_button").click(function(e){
     $(".interpretation_button").prop("disabled", true)
     $(".interpretation").fadeOut();
     $(".interpretation_button").fadeOut();
-    $("#oracle_interpretation").text($(".interpretation").val()).show();
-    if($("#trading").is(":checked")){
-      $(".queryTrading").fadeIn(1337)
-      $("#queryTrading").click(function(){
-        //oracles sends the query
-        $(".key").empty();
-        $("#query_textarea_trading").fadeOut();
-        $("#query_submitted_trading").text($("#querent_textarea_trading").val())
-        $("#querent_textarea_trading").fadeOut(777);
-        $("#queryTrading").fadeOut();
-        $("#queryTrading").prop("disabled", true)
-        p.send($("#querent_textarea_trading").val());
-      })
-
-    }
-    else{
-      $(".finished").fadeIn(3333);
-    }
+    $("#oracle_interpretation").text($(".interpretation").val()).show(); 
+    $(".finished").fadeIn(1337);
+    
   })
   p.on('data', data => {
     console.log(data)
@@ -307,8 +252,7 @@ $("#initiate_button").click(function(e){
   console.log(data)
   //document.querySelector('#outgoing').textContent = JSON.stringify(data)
    //list #uuid
-  console.log($("#trading").is(":checked"));
-   $.post("/initiate", {sequence : JSON.stringify(data), trading : $("#trading").is(":checked"), wallet_address: wallet_address, sum : sum, trips : encodeURIComponent(tripcode)}, function(data){
+   $.post("/initiate", {sequence : JSON.stringify(data), trips : encodeURIComponent(tripcode)}, function(data){
       $(".connection").show();
 
       $("#awaiting").text("Awaiting Peer...");
@@ -316,7 +260,7 @@ $("#initiate_button").click(function(e){
       $("#initiate_button").hide();
       $("#disconnect_button").show();
       $("#disconnect_button").prop("disabled", false)
-      $(".oracle h2").text(data.tripcode + ($("#trading").is(":checked") ? " (TRADING)" : ""));
+      $(".oracle h2").text(data.tripcode);
       
       var interval = setInterval(function(){
         $.get("/hail/" + encodeURIComponent(tripcode), function(data){
@@ -328,9 +272,7 @@ $("#initiate_button").click(function(e){
 
             $.post("/established/" + encodeURIComponent(tripcode), async function(data){
 
-              if(data.sum && data.sum > 0 && data.wallet_address){
-                $(".awaiting_eth").text("")
-              }
+              
             })
           }
         })
@@ -398,15 +340,6 @@ function arraysEqual(a, b) {
   return true;
 }
 
-$("#trading").change(function(){
-  if($(this).is(":checked")){
-    $("#wallet_address").prop("disabled", true)
-  }
-  else{
-    $("#wallet_address").prop("disabled", false)
-
-  }
-})
 
 var readers = []
 var firstReaders = true;
@@ -432,19 +365,16 @@ function getReaders(cb){
       var li = document.createElement("li");
       var tripcode = tripcode;
       console.log(data);
-      $(li).append("<a class='magick_li' href='#magick?tripcode=" + encodeURIComponent(tripcode) + "'>" + tripcode + 
-        (data.trading[index] ? " (TRADING)" : "") + "</a>");
+      $(li).append("<a class='magick_li' href='#magick?tripcode=" + encodeURIComponent(tripcode) + "'>" + tripcode + "</a>");
       //li != law ACOLYTE
       $(".readers").append(li);
       $(".readers").show();
       $(".magick_li").click(function(e){
-        $("#ether_tip").hide();
-        $("#ether_tip_sum").hide();
         e.preventDefault();
         //retrieve sequence
         ANCHOR.route($(this).attr("href"));
         var tripcode = ANCHOR.getParams().tripcode;
-        $("#magick_header").text(tripcode + (data.trading[index] ? " (TRADING)" : ""));
+        $("#magick_header").text(tripcode);
         $(".magick_connecting").show();
         tripcode = encodeURIComponent(tripcode);
         $.get("/sequence/" + tripcode, function(data){
@@ -452,7 +382,6 @@ function getReaders(cb){
             $("#not_found_header").hide();
           }
           //send signal
-          var wallet_address = data.wallet_address;
           p = new SimplePeer({
             initiator : false,
             //config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:global.stun.twilio.com:3478?transport=udp' }] },
@@ -468,7 +397,7 @@ function getReaders(cb){
           var sequence = data.sequence;
           p.on('signal', data=>{
             console.log("MAGICK SIGNAL SENT");
-            $.post("/magick", {sequence : JSON.stringify(data), sum:$("#sum").val(), wallet_address: $("#wallet_address").val(), tripcode : encodeURIComponent(tripcode)}, function(data){
+            $.post("/magick", {sequence : JSON.stringify(data), tripcode : encodeURIComponent(tripcode)}, function(data){
               console.log("MAGICK SIGNAL SUCCESS");
               
             })
@@ -489,7 +418,6 @@ function getReaders(cb){
                 $("#query_submitted").text(query);
                 //$.get("/web3/" + tripcode, async function(data){
 
-                console.log(data.sum);
 
                   //})
               })         
@@ -513,55 +441,12 @@ function getReaders(cb){
               }
               catch(e){
                 //data is an oracle
-                if(peerCount === 1){
-                  $(".final span").text(data);
-                  $("#awaiting_oracle").hide();
-                  if($('#magick_header').text().indexOf('TRADING') === -1){
-                    $(".finished").show();
-                  }
-                  else{
-                    $(".query_submission_trading").show();
-                  }
-                }              
-                //this is the peer who has already received his interpretation, so 0 (connect), 1 (draw) then 2. dummy and 3. querent and
-                //show draw button and functionize
-                else if(peerCount === 2){
-                  console.log("HERE!");
-                  $("#awaiting_query_trading").show();
-                  $("#discovered_query_trading").show();
-                  $("#query_submission_trading").text(data);
-                  $(".key").empty();
-                  $(".drawTrading").show(); //become the oracle
-                  $(".drawTrading").click(function(){
-                    $(".drawTrading").prop("disabled",true)
-                    $(".interpretationTrading").val("");    
-                  //for some reason this gets called twice?
-                    threeThreeThreeSpread(function(err, result){
-                      console.log(result);
-                      var threeThreeThree = result;
-                      assembleSpread(threeThreeThree);
-                      arrDigits = []
-                      p.send(JSON.stringify(threeThreeThree));
-                      $([document.documentElement, document.body]).animate({
-                        scrollTop: $(".reading").offset().top
-                      }, 2000);
-                      $(".tradingOracle").show();
-                      $(".interpretationTrading").show();
-                      $(".interpretation_button_trading").show();//4
-                      $(".interpretation_button_trading").click(function(){
-                        $(".interpretationTrading").hide();
-                        $(".interpretation_button_trading").hide();
-                        $("#interpretationTradingSpan").text($(".interpretationTrading").val())
-                        p.send($(".interpretationTrading").val());
-                        $(".interpretation_button_trading").prop("disabled", true)
-                        $(".finished").show();
-                      })
-                    });
-
-                  })
-                }
+                $(".final span").text(data);
+                $("#awaiting_oracle").hide();
+                $(".finished").fadeIn(1337);
+                
+                
               }
-              peerCount++;
             
           })
 

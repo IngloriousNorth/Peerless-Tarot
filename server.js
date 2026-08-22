@@ -54,8 +54,6 @@ app.post("/initiate", [
   const readerData = {
     trading: req.body.trading !== "false",
     sequence: JSON.parse(he.decode(req.body.sequence)),
-    sum: req.body.sum ? req.body.sum : 0,
-    wallet_address: req.body.wallet_address,
     tripcode: trips,
     hail: null
   };
@@ -74,16 +72,12 @@ app.get("/sequence/:tripcode", [check("tripcode").not().isEmpty().trim().escape(
   if (!reader) return res.status(404).json({ error: "Session expired or not found" });
 
   res.json({
-    sequence: JSON.stringify(reader.sequence),
-    sum: reader.sum,
-    wallet_address: reader.wallet_address
+    sequence: JSON.stringify(reader.sequence)
   });
 });
 
 app.post("/magick", [
   check("tripcode").not().isEmpty().trim().escape(),
-  check("sum").trim().escape(),
-  check("wallet_address").trim().escape(),
   check("sequence").not().isEmpty().custom(value => {
     try { JSON.parse(value); } catch (e) { return false; }
     return true;
@@ -96,8 +90,6 @@ app.post("/magick", [
   const reader = await getReader(tc) || {};
 
   reader.tripcode = tc;
-  reader.wallet_address = req.body.wallet_address || "";
-  reader.sum = req.body.sum || 0;
   reader.hail = JSON.parse(he.decode(req.body.sequence));
 
   await setReader(tc, reader);
@@ -105,9 +97,7 @@ app.post("/magick", [
 });
 
 app.get("/hail/:tripcode", [
-  check("tripcode").not().isEmpty().trim().escape(),
-  check("sum").trim().escape(),
-  check("wallet_address").trim().escape()
+  check("tripcode").not().isEmpty().trim().escape()
 ], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
@@ -117,9 +107,7 @@ app.get("/hail/:tripcode", [
 
   if (reader && reader.hail) {
     res.json({
-      sequence: JSON.stringify(reader.hail),
-      sum: reader.sum,
-      wallet_address: reader.wallet_address
+      sequence: JSON.stringify(reader.hail)
     });
   } else {
     res.end();
