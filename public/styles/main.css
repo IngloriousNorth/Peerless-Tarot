@@ -59,11 +59,11 @@ body{
 h2{
 	
 	text-align:left;
-	font-family:"Playfair Display", sans-serif;
+	font-family:"Nanum Pen Script", sans-serif;
 }
 
 button{
-	font-family:"Nanum Pen Script", sans-serif;
+	font-family:"Bitcount Single", sans-serif;
 }
 
 .menu li{
@@ -179,7 +179,7 @@ h1{
 
 h1 a{
 	font-size: 36px;
-	font-family: 'Elsie', sans-serif;
+	font-family: 'Bitcount Single', sans-serif;
 	color: white;
 }
 
@@ -307,7 +307,7 @@ h3{
 	padding-right:16px;
 	padding-left:0px;
 	font-size:18px;
-	font-family:"Playfair Display", sans-serif;
+	font-family:"Bitcount Single", sans-serif;
 	color: cyan;
 }
 
