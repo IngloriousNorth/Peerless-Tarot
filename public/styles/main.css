@@ -142,7 +142,7 @@ h2{
 
 .menu li a{
 	font-family: "Nanum Pen Script", Arial;
-	color: #50C777;
+	color: cyan;
 	font-size:27px;
 }
 
@@ -293,7 +293,7 @@ button{
 
 button:hover{
 	background-color:cyan;
-	color:darkyan;
+	color:darkcyan;
 }
 
 h3{
