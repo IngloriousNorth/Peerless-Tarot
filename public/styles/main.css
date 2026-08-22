@@ -121,7 +121,7 @@ h2{
 	font-size:27px;
 	text-align:left;
 	text-decoration: underline;
-	color:white;
+	color:cyan;
 }
 
 .menu{
@@ -167,7 +167,7 @@ h1{
 h1 a{
 	font-size: 36px;
 	font-family: 'Elsie', sans-serif;
-	color: white;
+	color: cyan;
 }
 
 .reading{
@@ -212,7 +212,7 @@ h1 a{
     color:#50C777;
 }
 
-.ANCHOR_partial span{
+.ANCHOR_partial span:not(.finalSpan){
 	font-family:"Playfair Display", serif;
 	font-size:16px;
 	color:#50C777;
@@ -291,8 +291,8 @@ h3{
 	padding:16px;
 	padding-left:0px;
 	font-size:18px;
-	font-family:"Open Sans", sans-serif;
-	color: white;
+	font-family:"Playfair Display", sans-serif;
+	color: cyan;
 }
 
 .interpretation, .interpretationTrading{
@@ -333,7 +333,8 @@ h3{
 }
 
 .finished{
-	color:cyan;
+	color:lightgoldenrodyellow;
+	font-family:"Elsie", sans-serif;
 	width:100%;
 	display:block;
 }
