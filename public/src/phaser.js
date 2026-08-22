@@ -199,6 +199,8 @@ $("#initiate_button").click(function(e){
     $("#connected").show();
     $(".query_submission").show()
     //$("#awaiting_query").fadeIn();
+    $("#spreadHeader").show();
+
     $(".draw").fadeIn(777);
     $(".draw").prop("disabled", false)
     $(".draw").on("click", function(e){
@@ -207,7 +209,6 @@ $("#initiate_button").click(function(e){
       $(".draw").prop("disabled",true)
       $(".draw").hide();
       $(".interpretation").val("");  
-      $("#spreadHeader").show();
       $(".interpretation").fadeIn(777);
       $(".interpretation_button").fadeIn(777) 
 
