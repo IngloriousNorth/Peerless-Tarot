@@ -135,6 +135,11 @@ h2{
 	z-index:999;
 }
 
+.readers li a, .readers li a:visited{
+	color:#50C777;
+	font-family:"Playfair Display", serif;
+}
+
 .menu li a{
 	font-family: "Nanum Pen Script", Arial;
 	color: mediumvioletred;
