@@ -256,6 +256,7 @@ textarea{
 	width:100%;
 	display:block;
 	color:#50C777;
+
 }
 
 .key span{
@@ -346,8 +347,9 @@ h3{
 }
 
 .finished{
-	color:lightgoldenrodyellow;
-	font-family:"Elsie", sans-serif;
+
+	color:dimgray;
+	font-family:"Bitcount Single", sans-serif;
 	width:100%;
 	display:block;
 }
