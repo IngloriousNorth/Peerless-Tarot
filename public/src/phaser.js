@@ -95,9 +95,7 @@ $(document).ready(function(){
 
 $(".ANCHOR").click(function(e){
   e.preventDefault();
-  if(!$(this).hasClass("solo")){
-    reset();
-  }
+  location.reload();
 })
 
 $(".home").click(function(e){
