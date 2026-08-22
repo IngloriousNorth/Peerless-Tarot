@@ -245,10 +245,12 @@ label{
 
 .key span{
 	text-align: left;
-	width: 100%;
 	display: inline-block;
 	float: left;
 	border:none;
+	width:84px;
+	display:block;
+	height:auto;
 	color:white;
 	font-family:"Playfair Display", serif;
 }
