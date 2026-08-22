@@ -242,16 +242,13 @@ input{
 }
 
 input::placeholder{
-	font-family:"Playfair Display", serif;
+	font-family:"Bitcount Single", serif;
 }
 
 textarea{
-	font-family:"Playfair Display", serif;
+	font-family:"Bitcount Single", serif;
 }
 
-label{
-	font-family:"Playfair Display", serif;
-}
 
 .finalSpan{
 	width:100%;
