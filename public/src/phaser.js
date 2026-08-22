@@ -139,6 +139,7 @@ function assembleSpread(threeThreeThree){
   
   
   $(".final").show();
+  $("#querent_oracle").show();
 }
 
 function flip(id){
