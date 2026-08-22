@@ -37,9 +37,6 @@ app.post("/pong", async (req, res) => {
 
 app.post("/initiate", [
   check("trips").not().isEmpty().trim().escape(),
-  check("trading").not().isEmpty().trim().escape(),
-  check("sum").trim().escape(),
-  check("wallet_address").trim().escape(),
   check("sequence").not().isEmpty().custom(value => {
     try { JSON.parse(value); } catch (e) { return false; }
     return true;
@@ -49,10 +46,8 @@ app.post("/initiate", [
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
   const trips = tripcode(he.decode(req.body.trips));
-  console.log("INITIATED: " + trips);
 
   const readerData = {
-    trading: req.body.trading !== "false",
     sequence: JSON.parse(he.decode(req.body.sequence)),
     tripcode: trips,
     hail: null
