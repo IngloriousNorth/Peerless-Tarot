@@ -69,6 +69,7 @@ $(document).ready(function(){
     $("#initiate_button").show();
     $(".interpretation_button").hide();
     $(".magick_connecting").hide();
+    $(".magick_connecting").text("Connecting...")
     $(".cards").hide();
     $("#incoming").hide();
     $(".draw").hide();
@@ -335,7 +336,7 @@ $("#initiate_button").click(function(e){
     reset();
   })
 
-  p.on('error', err => console.log('error', err))
+  p.on('error', err => {console.log('error', err); $(".magick_connecting").text("Error: Connection Failed.")})
 
 })
 
