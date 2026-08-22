@@ -239,7 +239,7 @@ label{
 }
 
 .key span{
-	text-align: center;
+	text-align: left;
 	width: 100%;
 	display: inline-block;
 	float: left;
