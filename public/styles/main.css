@@ -238,6 +238,11 @@ label{
 	font-family:"Playfair Display", serif;
 }
 
+.finalSpan{
+	width:100%;
+	display:block;
+}
+
 .key span{
 	text-align: left;
 	width: 100%;
