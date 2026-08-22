@@ -332,7 +332,9 @@ h3{
 }
 
 .finished{
-	color:deepskyblue;
+	color:#50C777;
+	width:100%;
+	display:block;
 }
 
 label {
