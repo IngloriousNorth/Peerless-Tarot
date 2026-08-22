@@ -34,7 +34,8 @@ $(document).ready(function(){
       clearTimeout(r);
     }
 
-    $("#oracles_header").text("Oracles")
+    $("#oracles_header").text("Browse")
+    $("#oracles_info").html("")
     if(ANCHOR.page() === "oracle"){
       $.post("/delete_oracle/" + $("#tripcode").val());
 
@@ -44,7 +45,7 @@ $(document).ready(function(){
     $("#spreadHeader").hide();
     $("#oracle_interpretation").text("").hide();
     $("#awaiting_oracle").show();
-   
+    $("#trip_console").text("");
     $("#tripcode").show();
     $(".finished").hide();
     $(".reading_h3").hide();
@@ -359,11 +360,12 @@ function getReaders(cb){
     $(".readers").empty();
     cb(null, data.tripcodes);
     if(!data.tripcodes || !data.tripcodes[0]){
-      $("#oracles_header").html("No Oracles. Why not <a href='#oracle' class='ANCHOR oracle'>host</a> one?");
+      $("#oracles_header").text("Browse");
+      $("#oracles_info").html("No Oracles. Why not <a href='#oracle' class='ANCHOR oracle'>host</a> one?");
       ANCHOR.buffer();
       return;
     }
-    $("#oracles_header").text("Oracles")
+    $("#oracles_header").text("Browse")
     data.tripcodes.forEach(function(tripcode, index){
 
       var li = document.createElement("li");
@@ -378,7 +380,7 @@ function getReaders(cb){
         //retrieve sequence
         ANCHOR.route($(this).attr("href"));
         var tripcode = ANCHOR.getParams().tripcode;
-        $("#magick_header").text(tripcode);
+        $("#trip_console").text(tripcode);
         $(".magick_connecting").show();
         tripcode = encodeURIComponent(tripcode);
         $.get("/sequence/" + tripcode, function(data){
