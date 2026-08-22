@@ -54,7 +54,7 @@
       </div>
       <div class="peer ANCHOR_partial">
         <div id="oracles">
-          <h2 id="oracles_header">Live Oracles</h2>
+          <h2 id="oracles_header">Oracles</h2>
           <ul class="readers">
      
           </ul>
@@ -65,8 +65,8 @@
         <br>
         <span class="magick_connecting" class="hidden">Connecting...</span>&nbsp;<br><br>
         <div class="query" class="hidden">     
-          <h3>Your Querent?</h3>
-          <textarea id="querent_textarea" placeholder="Querent (Optional)"></textarea><br><button id="query">Query</button>
+          <h3>Querent</h3>
+          <textarea id="querent_textarea" placeholder="Ask away (Optional)"></textarea><br><button id="query">Query</button>
           <span id="query_submitted"></span><br><br>
         </div>
         <br>
@@ -88,7 +88,7 @@
           </div>
           <br><br><br>
         <div class="final" class="hidden">
-          <h3>Oracle</h3>
+          <h3 id="querent_oracle">Oracle</h3>
           <span id="awaiting_oracle">Awaiting Oracle...</span>
           <span class="finalSpan"></span>
         </div>
@@ -116,6 +116,7 @@
         <span id="awaiting_eth" class="hidden"></span>
         <br>
         <div class="query_submission">
+          <h3 id="oracle_querent">Querent</h3>
           <span class="hidden" id="awaiting_query">Awaiting Querent</span>
           <span id="query_submission"></span>
         </div>

@@ -99,6 +99,11 @@ header{
 	z-index:9999;
 }
 
+#querent_oracle, #oracle_querent{
+	width:100%;
+	display:block;
+}
+
 input{
 	height:24px;
 	width:125px;
