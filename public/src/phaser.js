@@ -66,7 +66,7 @@ $(document).ready(function(){
     $("#query_submitted_trading").text("");
     $("#query_submission").text("");
     $(".interpretation_button").prop("disabled", false)
-    $("#initiate_button").hide();
+    $("#initiate_button").show();
     $(".interpretation_button").hide();
     $(".magick_connecting").hide();
     $(".cards").hide();
