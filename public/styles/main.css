@@ -146,7 +146,8 @@ h2{
 	width:100%;
 	position:fixed;
 	top:60px;
-	left:5px;
+	margin-left:5px;
+	box-sizing:border-box;
 	z-index:999;
 }
 
@@ -202,7 +203,7 @@ h1 a, h1 a:visited{
 
 .reading{
 	width:100%;
-	height:200px;
+	height:auto;
 }
 
 .data{
@@ -219,15 +220,14 @@ h1 a, h1 a:visited{
 
 .ANCHOR_partial{
 	padding-top:40px;
-	padding-left: 5px;
-	padding-right:5px;
+	margin-left: 5px;
+	margin-right:5px;
 	overflow-y:auto;
 	overflow-x:auto;
 	background-color:black;
 	position:fixed;
 	top:100px;
-	width:100%;
-	box-sizing:border-box;
+	width:calc(100% - 10px);
 	height:calc(100% - 100px);
 }
 
