@@ -239,6 +239,7 @@ h1 a{
 
 input{
 	height:55px;
+	font-family:"Bitcount Single", serif;
 }
 
 input::placeholder{
