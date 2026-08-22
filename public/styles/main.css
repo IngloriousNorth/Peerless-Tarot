@@ -90,8 +90,8 @@ button{
 
 header{
 	background-color:darkcyan;
-	box-shadow:4px 4px 4px hotpink;
-	border-bottom:2px solid dimgray;
+	box-shadow:4px 4px 4px darkviolet;
+	border-bottom:2px solid white;
 	position:fixed;
 	top:0px;
 	left:0px;
@@ -179,7 +179,7 @@ h1{
 	top:2px;
 	width:320px;
 	font-size: 39px;
-	left:5px;
+	left:15px;
 	float:left;
 }
 
@@ -298,6 +298,14 @@ textarea{
 	float: left;
 }
 
+#sun{
+	position:fixed;
+	top:2px;
+	left:5px;
+	font-size:32px;
+	color:white;
+}
+
 button{
 	background-color:cyan;
 	box-shadow:2px 2px 2px #50C777;
@@ -308,7 +316,6 @@ button{
 button:hover{
 	background-color:darkcyan;
 	box-shadow:2px 2px 2px #50C777;
-	color:blue;
 }
 
 h3{
