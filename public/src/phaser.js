@@ -59,6 +59,7 @@ $(document).ready(function(){
     $(".interpretation_button").prop("disabled", false)
     $("#initiate_button").show();
     $(".interpretation_button").hide();
+    $("#oracles").show();
     $(".magick_connecting").hide();
     $(".magick_connecting").text("Connecting...")
     $(".cards").hide();
@@ -363,7 +364,7 @@ function getReaders(cb){
     cb(null, data.tripcodes);
     if(!data.tripcodes || !data.tripcodes[0]){
       $("#oracles_header").text("Browse");
-      $("#oracles_info").html("No Oracles. Why not <a href='#oracle' class='ANCHOR oracle'>host</a> one?");
+      $("#oracle_info").html("No Oracles. Why not <a href='#oracle' class='ANCHOR oracle'>host</a> one?");
       ANCHOR.buffer();
       return;
     }
@@ -384,6 +385,7 @@ function getReaders(cb){
         var tripcode = ANCHOR.getParams().tripcode;
         $("#trip_console").text(tripcode);
         $(".magick_connecting").show();
+        $("#oracles").hide();
         tripcode = encodeURIComponent(tripcode);
         $.get("/sequence/" + tripcode, function(data){
           if(data.sequence){
@@ -418,16 +420,11 @@ function getReaders(cb){
               $("#query").click(async function(e){
                 e.preventDefault();
                 var query = $(".query textarea").val();
-                if(query === "true666") p.destroy();
                 p.send(query);
                 $(".query textarea").hide();
                 $(".query button").hide();
                 $("#query_submitted").show();
                 $("#query_submitted").text(query);
-                //$.get("/web3/" + tripcode, async function(data){
-
-
-                  //})
               })         
           })
           //this is the peer receiving the spread
