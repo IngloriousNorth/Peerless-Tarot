@@ -74,7 +74,10 @@ button{
 
 
 
-
+#text{
+	display:block;
+	width:98px;
+}
 
 header{
 	background-color:darkcyan;
@@ -301,25 +304,23 @@ h3{
 
 .final span{
 	height: 180px;
-	width: 333px;
-	display: inline-block;
 }
 
 .hidden{
 	display: none;
 }
 
-#data_1{
+.data_1{
 	
 	left: 0;
 }
 
-#data_2{
+.data_2{
 	top: 1%;
 	right: 1%;
 }
 
-#data_3{
+.data_3{
 	top: 1%;
 	left: 1%;
 }
