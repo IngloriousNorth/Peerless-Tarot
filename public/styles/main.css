@@ -128,7 +128,6 @@ img{
 h2{
 	font-size:27px;
 	text-align:left;
-	text-decoration: underline;
 	color:dimgray;
 }
 
@@ -146,10 +145,11 @@ h2{
 	font-size:16px;
 }
 
-.menu li a{
+.menu li a, .menu li a:visited{
 	font-family: "Nanum Pen Script", Arial;
 	color: cyan;
 	font-size:27px;
+	text-decoration:none;
 }
 
 .menu li:first{
