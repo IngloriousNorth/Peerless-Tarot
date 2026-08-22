@@ -178,9 +178,6 @@ h2{
 }
 
 textarea{
-	margin-left:5px;
-	margin-right:5px;
-	box-sizing:border-box;
 	width:100%;
 }
 
@@ -219,16 +216,19 @@ h1 a, h1 a:visited{
 }
 
 .ANCHOR_partial{
-	padding-top:40px;
-	margin-left: 5px;
-	margin-right:5px;
-	overflow-y:auto;
-	overflow-x:auto;
-	background-color:black;
-	position:fixed;
-	top:100px;
-	width:calc(100% - 10px);
-	height:calc(100% - 100px);
+		padding-top: 40px;
+    padding-left: 5px;
+    padding-right: 5px;
+    overflow-y: auto;
+    overflow-x: hidden; /* Prevent horizontal scrollbars */
+    background-color: black;
+    position: fixed;
+    top: 100px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: calc(100% - 100px);
+    box-sizing: border-box;
 }
 
 
