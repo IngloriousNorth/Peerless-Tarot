@@ -79,7 +79,7 @@ button{
 header{
 	background-color:darkcyan;
 	box-shadow:3px 4px 5px dimgray;
-	border-bottom:2px solid white;
+	border-bottom:2px solid cyan;
 	position:fixed;
 	top:0px;
 	left:0px;
@@ -134,8 +134,8 @@ h2{
 
 .menu li a{
 	font-family: "Nanum Pen Script", Arial;
-	color: cyan;
-	font-size:23px;
+	color: #50C777;
+	font-size:27px;
 }
 
 .menu li:first{
@@ -241,6 +241,7 @@ label{
 .finalSpan{
 	width:100%;
 	display:block;
+	color:white;
 }
 
 .key span{
@@ -248,7 +249,7 @@ label{
 	display: inline-block;
 	float: left;
 	border:none;
-	width:84px;
+	width:100px;
 	display:block;
 	height:auto;
 	color:dimgray;
@@ -332,9 +333,15 @@ h3{
 }
 
 .finished{
-	color:#50C777;
+	color:cyan;
 	width:100%;
 	display:block;
+}
+
+#oracle_interpretation{
+	width:100%;
+	display:block;
+	color:white;
 }
 
 label {
