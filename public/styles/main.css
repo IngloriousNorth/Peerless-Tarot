@@ -90,7 +90,7 @@ button{
 
 header{
 	background-color:darkcyan;
-	box-shadow:3px 3px 4px mediumvioletred;
+	box-shadow:4px 4px 4px hotpink;
 	border-bottom:2px solid dimgray;
 	position:fixed;
 	top:0px;
@@ -132,7 +132,8 @@ img{
 h2{
 	font-size:27px;
 	text-align:left;
-	color:dimgray;
+	color:hotpink;
+	text-decoration:underline;
 }
 
 .menu{
@@ -145,7 +146,7 @@ h2{
 
 .readers li a, .readers li a:visited{
 	color:#50C777;
-	font-family:"Playfair Display", serif;
+	font-family:"VT323", serif;
 	font-size:16px;
 }
 
@@ -185,7 +186,8 @@ h1{
 h1 a, h1 a:visited{
 	font-size: 36px;
 	font-family: 'Bitcount Single', sans-serif;
-	color: darkviolet;
+	color: hotpink;
+	text-shadow:2px 3px cyan;
 	text-decoration:none;
 }
 
@@ -234,26 +236,26 @@ h1 a, h1 a:visited{
 }
 
 .ANCHOR_partial span:not(.finalSpan){
-	font-family:"Playfair Display", serif;
+	font-family:"VT323", serif;
 	font-size:16px;
 	color:#50C777;
 }
 
 .ANCHOR_partial p{
-	font-family:"Playfair Display", serif;
+	font-family:"VT323", serif;
 }
 
 input{
 	height:55px;
-	font-family:"Bitcount Single", serif;
+	font-family:"VT323", serif;
 }
 
 input::placeholder{
-	font-family:"Bitcount Single", serif;
+	font-family:"VT323", serif;
 }
 
 textarea{
-	font-family:"Bitcount Single", serif;
+	font-family:"VT323", serif;
 }
 
 
@@ -273,7 +275,7 @@ textarea{
 	display:block;
 	height:auto;
 	color:#50C777 !important;
-	font-family:"Playfair Display", serif;
+	font-family:"VT323", serif;
 }
 
 .data{ 
@@ -297,14 +299,16 @@ textarea{
 }
 
 button{
-	background-color:darkcyan;
+	background-color:cyan;
 	box-shadow:2px 2px 2px #50C777;
-	color:cyan;
+	color:hotpink;
+	
 }
 
 button:hover{
-	background-color:cyan;
-	color:darkcyan;
+	background-color:darkcyan;
+	box-shadow:2px 2px 2px #50C777;
+	color:blue;
 }
 
 h3{
